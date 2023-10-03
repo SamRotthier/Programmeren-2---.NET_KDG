@@ -7,5 +7,5 @@
 * Onderwerp: Monster *-1 Player \*-\* Guild
 
 ---
-- Solution name:
+- Solution name: MedievalMMO
     - Console Application project: CA

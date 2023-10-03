@@ -8,8 +8,8 @@ public class Player
     public DateTime PlayerBirthdate { get; set; }
     public Gender PlayerGender { get; set; }
     public int PlayerLevel { get; set; }
-    public ICollection<PlayerMonster>? PlayerMonsters { get; set; }
-    public ICollection<PlayerGuild>? PlayerGuilds { get; set; }
+    public ICollection<Monster>? PlayerMonsters { get; set; }
+    public ICollection<Guild>? PlayerGuilds { get; set; }
     
     // constructor
     public Player(int playerId, string playerName, DateTime playerBirthdate, Gender playerGender, int playerLevel)

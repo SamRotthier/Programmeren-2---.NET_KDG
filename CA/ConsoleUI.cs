@@ -5,12 +5,13 @@ public class ConsoleUI
     private readonly List<Player> _players = new List<Player>();
     private readonly List<Guild> _guilds = new List<Guild>();
     
+    // ConsoleUI constructor
     public ConsoleUI()
     {
         Seed();
     }
-    
-    public void Seed()
+
+    private void Seed()
     {
         // Filling in players
         Player player1 = new Player(1, "Sam", new DateTime(1998, 04,11), Gender.Male, 11);
@@ -32,69 +33,33 @@ public class ConsoleUI
         Guild guild4 = new Guild(4,"gamers",new DateTime(2023, 10,1), 3);
         _guilds.Add(guild4);
         
-        PlayerGuild pg11 = new PlayerGuild()
-        {
-            Player = player1,
-            Guild = guild1
-        };
-        player1.PlayerGuilds?.Add(pg11);
-        guild1.PlayersInGuild?.Add(pg11);
+        // Filling guilds in player
+        player1.PlayerGuilds?.Add(guild1);
+        player1.PlayerGuilds?.Add(guild2);
+        player1.PlayerGuilds?.Add(guild3);
         
-        PlayerGuild pg12 = new PlayerGuild()
-        {
-            Player = player1,
-            Guild = guild2
-        };
-        player1.PlayerGuilds?.Add(pg12);
-        guild2.PlayersInGuild?.Add(pg12);
+        player2.PlayerGuilds?.Add(guild1);
         
-        PlayerGuild pg13 = new PlayerGuild()
-        {
-            Player = player1,
-            Guild = guild3
-        };
-        player1.PlayerGuilds?.Add(pg13);
-        guild3.PlayersInGuild?.Add(pg13);
+        player3.PlayerGuilds?.Add(guild4);
         
-        PlayerGuild pg21 = new PlayerGuild()
-        {
-            Player = player2,
-            Guild = guild1
-        };
-        player2.PlayerGuilds?.Add(pg21);
-        guild1.PlayersInGuild?.Add(pg21);
+        player4.PlayerGuilds?.Add(guild1);
+        player4.PlayerGuilds?.Add(guild2);
+        player4.PlayerGuilds?.Add(guild3);
+        player4.PlayerGuilds?.Add(guild4);
         
-        PlayerGuild pg34 = new PlayerGuild()
-        {
-            Player = player3,
-            Guild = guild4
-        };
-        player3.PlayerGuilds?.Add(pg34);
-        guild4.PlayersInGuild?.Add(pg34);
+        // Filling players in guild
+        guild1.PlayersInGuild?.Add(player1);
+        guild1.PlayersInGuild?.Add(player2);
+        guild1.PlayersInGuild?.Add(player4);
         
-        PlayerGuild pg43 = new PlayerGuild()
-        {
-            Player = player4,
-            Guild = guild3
-        };
-        player4.PlayerGuilds?.Add(pg43);
-        guild3.PlayersInGuild?.Add(pg43);
+        guild2.PlayersInGuild?.Add(player1);
+        guild2.PlayersInGuild?.Add(player4);
         
-        PlayerGuild pg41 = new PlayerGuild()
-        {
-            Player = player4,
-            Guild = guild1
-        };
-        player4.PlayerGuilds?.Add(pg41);
-        guild1.PlayersInGuild?.Add(pg41);
+        guild3.PlayersInGuild?.Add(player1);
+        guild3.PlayersInGuild?.Add(player4);
         
-        PlayerGuild pg42 = new PlayerGuild()
-        {
-            Player = player4,
-            Guild = guild2
-        };
-        player4.PlayerGuilds?.Add(pg42);
-        guild2.PlayersInGuild?.Add(pg42);
+        guild4.PlayersInGuild?.Add(player3);
+        guild4.PlayersInGuild?.Add(player4);
     }
     
     public void Run(){ 
@@ -104,7 +69,6 @@ public class ConsoleUI
             case 0:
                 Console.WriteLine("Thank you for using my program, it will close now"); 
                 return;
-              
             case 1:
                 DisplayAllPlayers();
                 break;
@@ -127,18 +91,17 @@ public class ConsoleUI
     // displays the menue for the application
     private int? WriteMenueAndReadInput()
     {
+        Console.WriteLine("What Would you like to do?"); 
+        Console.WriteLine("==========================");
+        Console.WriteLine("0) Quit"); 
+        Console.WriteLine("1) Show all players"); 
+        Console.WriteLine("2) Show players with gender"); //1 condition - search on gender
+        Console.WriteLine("3) Show all guilds"); 
+        Console.WriteLine("4) Show guilds with name and/or level"); //2 conditions - search on name and/or level
+        Console.WriteLine("Choice (0-4):");
         try
         {
-            Console.WriteLine("What Would you like to do?"); 
-            Console.WriteLine("==========================");
-            Console.WriteLine("0) Quit"); 
-            Console.WriteLine("1) Show all players"); 
-            Console.WriteLine("2) Show players with gender"); //1 condition - search on gender
-            Console.WriteLine("3) Show all guilds"); 
-            Console.WriteLine("4) Show guilds with name and/or level"); //2 conditions - search on name and/or level
-            Console.WriteLine("Choice (0-4):");
-            int? input = int.Parse(Console.ReadLine());
-            //Int32.TryParse(Console.ReadLine(), out int input);
+            int? input = int.Parse(Console.ReadLine()!);
             Console.WriteLine("");
             return input;
         }
@@ -163,13 +126,20 @@ public class ConsoleUI
     // Displays the players filtered by chosen gender
     private void DisplayPlayerWithGender()
     {
-        try
-        {
-            WriteGenders();
+        WriteGenders();
             
-            Console.WriteLine("Enter the number associated with the gender below.");
-            int? inputGender = int.Parse(Console.ReadLine()); 
-            //Int32.TryParse(Console.ReadLine(), out int inputGender);
+        Console.WriteLine("Enter the number associated with the gender below.");
+        int? inputGender = null;
+        try
+        {       
+            inputGender = int.Parse(Console.ReadLine()!); 
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Not a valid input\n");
+        }
+        
+        if (inputGender != null){
             Gender gender = (Gender)inputGender; //casting the number back to the enum
             Console.WriteLine("Here are all the players with this gender:");
 
@@ -182,14 +152,10 @@ public class ConsoleUI
                 Console.WriteLine("");    
             }
         }
-        catch (Exception e)
-        {
-            Console.WriteLine("Not a valid input\n");
-        }
     }
 
     // Displays the different genders
-    private void WriteGenders()
+    private static void WriteGenders()
     {
         Console.Write("What gender does the player have? ");
         Gender[] genders = Enum.GetValues<Gender>();
@@ -216,11 +182,9 @@ public class ConsoleUI
         try
         {
             Console.WriteLine("Please provide the name of (or a part of) the guilds name (this is optional):");
-            string? guildName = Console.ReadLine();
+            string guildName = Console.ReadLine();
             Console.WriteLine("Please provide the level of the guild (this is optional):");
-            //int? guildLevel = int.Parse(Console.ReadLine()); 
             Int32.TryParse(Console.ReadLine(), out int guildLevel);
-        
             IEnumerable<Guild> filteredGuildList = GuildsFilteredOnNameAndOrLevel(_guilds, guildName, guildLevel);
             Console.WriteLine("Here are all the guilds with the given (partial)name or level:");
             foreach (var guild in filteredGuildList)
@@ -236,16 +200,14 @@ public class ConsoleUI
     }
     
     // Lamda expression for easy filtering
-    IEnumerable<Guild> GuildsFilteredOnNameAndOrLevel(List<Guild> _guilds, string? guildName = null,
-        int? guildLevel = null )
+    IEnumerable<Guild> GuildsFilteredOnNameAndOrLevel(List<Guild> listOfGuilds, string guildName = null, int? guildLevel = null )
     {
-        IEnumerable<Guild> result = _guilds; // IEnumerable so we can work more easily with the fitlers
+        IEnumerable<Guild> result = listOfGuilds; // IEnumerable so we can work more easily with the fitlers
         // Filter on name or part of name
         if (!string.IsNullOrEmpty(guildName))
         {
             result = result.Where(f => f.GuildName.Contains(guildName, StringComparison.OrdinalIgnoreCase));
         }
-        
         // Filter on Level
         if (guildLevel != null && guildLevel > 0)
         {
