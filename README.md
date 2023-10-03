@@ -4,4 +4,4 @@
 * Studentennummer: 0162653-81
 * Academiejaar: 23-24
 * Klasgroep: TIFL02
-* Onderwerp: Monster *-1 Player *-* Guild
+* Onderwerp: Monster *-1 Player \*-\* Guild
