@@ -5,3 +5,7 @@
 * Academiejaar: 23-24
 * Klasgroep: TIFL02
 * Onderwerp: Monster *-1 Player \*-\* Guild
+
+---
+- Solution name:
+    - Console Application project: CA

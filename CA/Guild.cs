@@ -7,7 +7,7 @@ public class Guild
     public string GuildName { get; set; }
     public DateTime GuildMadeOn { get; set; }
     public int GuildLevel { get; set; }
-    public string? GuildMadeBy { get; set; } //playerId
+    public string GuildMadeBy { get; set; } //playerId
     public ICollection<PlayerGuild>? PlayersInGuild { get; set; } //playerId
     
     // constructor
