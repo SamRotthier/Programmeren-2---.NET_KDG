@@ -1,4 +1,4 @@
-namespace Sprint1;
+namespace MedievalMMO.BL.Domain;
 
 public class Guild
 {

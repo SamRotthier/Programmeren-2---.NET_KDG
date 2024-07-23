@@ -1,8 +1,11 @@
-namespace Sprint1;
+using System.ComponentModel.DataAnnotations;
+
+namespace MedievalMMO.BL.Domain;
 
 public class Player
 {
     // properties
+
     public int PlayerId { get; set; } // to make relations between classes
     public string PlayerName { get; set; }
     public DateTime PlayerBirthdate { get; set; }
