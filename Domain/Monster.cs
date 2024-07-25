@@ -1,4 +1,4 @@
-namespace MedievalMMO.BL.Domain;
+namespace MedievalMMO.Domain;
 
 public class Monster
 {

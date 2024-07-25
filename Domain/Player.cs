@@ -1,15 +1,20 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace MedievalMMO.BL.Domain;
+namespace MedievalMMO.Domain;
 
 public class Player
 {
     // properties
-
+    [Key]
     public int PlayerId { get; set; } // to make relations between classes
+    
+    [Required(ErrorMessage="Player name cannot be empty")]
     public string PlayerName { get; set; }
+    
     public DateTime PlayerBirthdate { get; set; }
     public Gender PlayerGender { get; set; }
+    
+    [Range(1,99, ErrorMessage="Player level outside of range")]
     public int PlayerLevel { get; set; }
     public ICollection<Monster>? PlayerMonsters { get; set; }
     public ICollection<Guild>? PlayerGuilds { get; set; }
@@ -36,5 +41,6 @@ public class Player
         //+ $"Monsters:'{PlayerMonsters}', " +
         //$"Guilds:'{PlayerGuilds}'";
     }
-    
+
+
 }

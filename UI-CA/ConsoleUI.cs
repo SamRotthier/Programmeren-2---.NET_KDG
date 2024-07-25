@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using MedievalMMO.BL;
-using MedievalMMO.BL.Domain;
+using MedievalMMO.Domain;
+
 
 namespace MedievalMMO.UI.CA;
 
@@ -34,12 +36,20 @@ public class ConsoleUI
             case 4:
                 DisplayGuildsWithNameAndOrLevel();
                 break;
+            case 5:
+                DisplayAddPlayer();
+                break;
+            case 6:
+                DisplayAddGuild();
+                break;
             default:
                 Console.WriteLine("Something went wrong, try again\n"); 
                 break;
         }
         Run();
     }
+
+
 
     // displays the menue for the application
     private int? WriteMenueAndReadInput()
@@ -51,7 +61,9 @@ public class ConsoleUI
         Console.WriteLine("2) Show players with gender"); //1 condition - search on gender
         Console.WriteLine("3) Show all guilds"); 
         Console.WriteLine("4) Show guilds with name and/or level"); //2 conditions - search on name and/or level
-        Console.WriteLine("Choice (0-4):");
+        Console.WriteLine("5) Add a Player to List");
+        Console.WriteLine("6) Add a Guild to List");
+        Console.WriteLine("Choice (0-6):");
         try
         {
             int? input = int.Parse(Console.ReadLine()!);
@@ -154,20 +166,99 @@ public class ConsoleUI
         }
     }
     
-    // Lamda expression for easy filtering
-    IEnumerable<Guild> GuildsFilteredOnNameAndOrLevel(List<Guild> listOfGuilds, string guildName = null, int? guildLevel = null )
+    
+    private void DisplayAddPlayer()
     {
-        IEnumerable<Guild> result = listOfGuilds; // IEnumerable so we can work more easily with the fitlers
-        // Filter on name or part of name
-        if (!string.IsNullOrEmpty(guildName))
+        Console.WriteLine("Add Player"); 
+        Console.WriteLine("==========================");
+        Console.WriteLine("Name:");
+        string name = Console.ReadLine();
+        
+        Console.WriteLine("PlayerBirthdate (YYYY-MM-DD):");
+        string lineB = Console.ReadLine();
+        DateTime birthdate;
+        while (!DateTime.TryParseExact(lineB, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None,
+                   out birthdate))
         {
-            result = result.Where(f => f.GuildName.Contains(guildName, StringComparison.OrdinalIgnoreCase));
+            Console.WriteLine("Invalid date, please retry (format yyyy-MM-dd)");
+            lineB = Console.ReadLine();
         }
-        // Filter on Level
-        if (guildLevel != null && guildLevel > 0)
+        
+        Console.WriteLine("Gender( 1)Male, 2)Female, 3)NonBinary, 4)Other) - number only:");
+        Gender gender = Gender.Other;
+        try
         {
-            result = result.Where(f => f.GuildLevel == guildLevel.Value);
+            gender =(Gender)Convert.ToInt32(Console.ReadLine());
         }
-        return result;
+        catch (Exception e)
+        {
+            Console.WriteLine("Something went wrong while trying to parse the gender, make sure you enter a valid number");
+            DisplayAddPlayer();
+        }
+        
+        
+        Console.WriteLine("Level:");
+        int level = 1;
+        try
+        {
+            level = Convert.ToInt32(Console.ReadLine());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Something went wrong while trying to parse the level, make sure you enter a valid number");
+            DisplayAddPlayer();
+        }
+
+        try
+        {
+            _manager.AddPlayer(name, birthdate, gender, level);
+        }
+        catch (ValidationException validationException)
+        {
+            Console.WriteLine(validationException.Message);
+            DisplayAddPlayer();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("There has been an unexpected problem!");
+        }
+    }
+    
+    private void DisplayAddGuild()
+    {
+        Console.WriteLine("Add Guild"); 
+        Console.WriteLine("==========================");
+        Console.WriteLine("Name:");
+        string name = Console.ReadLine();
+        
+        Console.WriteLine("Level:");
+        int level= 1;
+        try
+        {
+            level = Convert.ToInt32(Console.ReadLine());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Something went wrong while trying to parse the level, make sure you enter a valid number");
+            DisplayAddGuild();
+        }
+        
+        Console.WriteLine("Guild Leader:");
+        string nameLeader =Console.ReadLine();
+        
+        try
+        {
+            _manager.AddGuild(name,DateTime.Now,level, nameLeader);
+        }
+        catch (ValidationException validationException)
+        {
+            Console.WriteLine(validationException.Message);
+            Console.WriteLine(DateTime.Now.AddHours(10));
+            DisplayAddGuild();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("There has been an unexpected problem!");
+        }
     }
 }

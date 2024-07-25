@@ -1,4 +1,4 @@
-using MedievalMMO.BL.Domain;
+using MedievalMMO.Domain;
 
 namespace MedievalMMO.BL;
 
