@@ -1,11 +1,16 @@
-namespace MedievalMMO.Domain;
+using System.ComponentModel.DataAnnotations;
+
+namespace MedievalMMO.BL.Domain;
 
 public class Monster
 {
     // properties
+    [Key]
     public int MonsterId { get; private set; }
+    [Required(ErrorMessage="Monster name cannot be empty")]
     public string MonsterName { get; private set; }
     public Gender MonsterGender { get; private set; }
+    [Range(1,99, ErrorMessage="level should be in range 1-99")]
     public int MonsterLevel { get; private set; }
     public double MonsterHealth { get; private set; }
     public bool MonsterCanEvolve { get; private set; }

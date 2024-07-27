@@ -1,4 +1,4 @@
-namespace MedievalMMO.Domain;
+namespace MedievalMMO.BL.Domain;
 
 public enum Gender
 {

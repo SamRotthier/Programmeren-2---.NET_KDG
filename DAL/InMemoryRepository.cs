@@ -1,4 +1,4 @@
-using MedievalMMO.Domain;
+using MedievalMMO.BL.Domain;
 
 namespace MedievalMMO.DAL;
 
@@ -63,12 +63,12 @@ public class InMemoryRepository : IRepository
         return _players.ElementAt(id);
     }
 
-    public List<Player> ReadAllPlayers()
+    public ICollection<Player> ReadAllPlayers()
     {
         return _players;
     }
 
-    public List<Player> ReadPlayersByGender(Gender gender)
+    public ICollection<Player> ReadPlayersByGender(Gender gender)
     {
         //Linq Query
         return _players.Where(player => player.PlayerGender == gender).ToList();
@@ -97,7 +97,7 @@ public class InMemoryRepository : IRepository
         return _guilds.ElementAt(id);
     }
 
-    public List<Guild> ReadAllGuilds()
+    public ICollection<Guild> ReadAllGuilds()
     {
         return _guilds;
     }

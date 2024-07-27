@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using MedievalMMO.BL.Domain;
 using MedievalMMO.DAL;
-using MedievalMMO.Domain;
 
 namespace MedievalMMO.BL;
 
@@ -19,12 +19,12 @@ public class Manager: IManager
         return _repository.ReadPlayer(id);
     }
 
-    public List<Player> GetAllPlayers()
+    public ICollection<Player> GetAllPlayers()
     {
         return _repository.ReadAllPlayers();
     }
 
-    public List<Player> GetPlayersByGender(Gender gender)
+    public ICollection<Player> GetPlayersByGender(Gender gender)
     {
         return _repository.ReadPlayersByGender(gender);
     }
@@ -42,7 +42,7 @@ public class Manager: IManager
         return _repository.ReadGuild(id);
     }
 
-    public List<Guild> GetAllGuilds()
+    public ICollection<Guild> GetAllGuilds()
     {
         return _repository.ReadAllGuilds();
     }
@@ -63,20 +63,20 @@ public class Manager: IManager
     private void Validate(Player player)
     {
         List<ValidationResult> errors = new List<ValidationResult>();
-        bool valid = Validator.TryValidateObject(player, new ValidationContext(player), errors, validateAllProperties: true);
+        bool valid = Validator.TryValidateObject(player, new ValidationContext(player), errors,true);
         if (!valid)
         {
-            throw new ValidationException("Player not valid!" + errors);
+            throw new ValidationException( string.Join("|", errors));
         }
     }
     
     private void Validate(Guild guild)
     {
         List<ValidationResult> errors = new List<ValidationResult>();
-        bool valid = Validator.TryValidateObject(guild, new ValidationContext(guild), errors, validateAllProperties: true);
+        bool valid = Validator.TryValidateObject(guild, new ValidationContext(guild), errors, true);
         if (!valid)
         {
-            throw new ValidationException("Guild not valid!: " + errors);
+            throw new ValidationException( string.Join("|", errors));
         }
     }
 }

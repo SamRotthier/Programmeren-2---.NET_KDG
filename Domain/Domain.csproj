@@ -4,7 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
-        <RootNamespace>MedievalMMO.Domain</RootNamespace>
+        <RootNamespace>MedievalMMO.BL.Domain</RootNamespace>
     </PropertyGroup>
 
 </Project>

@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using MedievalMMO.BL;
-using MedievalMMO.Domain;
+using MedievalMMO.BL.Domain;
+using MedievalMMO.UI.CA.Extensions;
 
 
 namespace MedievalMMO.UI.CA;
@@ -80,11 +81,11 @@ public class ConsoleUI
     // Displays all the players
     private void DisplayAllPlayers()
     {
-        List<Player> players= _manager.GetAllPlayers();
+        IEnumerable<Player> players= _manager.GetAllPlayers();
         Console.WriteLine("Here are all the players:");
         foreach (var player in players)
         {
-            Console.WriteLine(player.ToString());
+            Console.WriteLine(PlayerExtensions.GetPlayerInfo(player));
         }
         Console.WriteLine(""); 
     }
@@ -92,7 +93,6 @@ public class ConsoleUI
     // Displays the different genders
     private static void WriteGenders()
     {
-        Console.Write("What gender does the player have? ");
         Gender[] genders = Enum.GetValues<Gender>();
         foreach (var gender in genders)
         {
@@ -103,6 +103,7 @@ public class ConsoleUI
     // Displays the players filtered by chosen gender
     private void DisplayPlayerWithGender()
     {
+        Console.Write("What gender does the player have? ");
         WriteGenders();
         
         Console.WriteLine("Enter the number associated with the gender below.");
@@ -117,26 +118,30 @@ public class ConsoleUI
         }
         
         Gender gender = (Gender)inputGender; //casting the number to the enum
-        List<Player> players = _manager.GetPlayersByGender(gender);
+        IEnumerable<Player> players = _manager.GetPlayersByGender(gender);
         
         if (players != null){
             Console.WriteLine("Here are all the players with this gender:");
             foreach (var player in players)
             {
-                Console.WriteLine(player.ToString());
+                Console.WriteLine(PlayerExtensions.GetPlayerInfo(player));
             }
             Console.WriteLine("");  
+        }
+        else
+        {
+            Console.WriteLine("There were no players with the given Gender or a problem with loading the players");
         }
     }
     
     // Displays all the guilds
     private void DisplayAllGuilds()
     {
-        List<Guild> guilds = _manager.GetAllGuilds();
+        IEnumerable<Guild> guilds = _manager.GetAllGuilds();
         Console.WriteLine("Here are all the guilds:");
         foreach (var guild in guilds)
         {
-            Console.WriteLine(guild.ToString());   
+            Console.WriteLine(GuildExtensions.GetGuildInfo(guild));   
         }
         Console.WriteLine("");    
     }
@@ -156,7 +161,7 @@ public class ConsoleUI
             Console.WriteLine("Here are all the guilds with the given (partial)name or level:");
             foreach (var guild in filteredGuildList)
             {
-                Console.WriteLine(guild.ToString());
+                Console.WriteLine(GuildExtensions.GetGuildInfo(guild));
             }
             Console.WriteLine("");    
         }
@@ -184,7 +189,9 @@ public class ConsoleUI
             lineB = Console.ReadLine();
         }
         
-        Console.WriteLine("Gender( 1)Male, 2)Female, 3)NonBinary, 4)Other) - number only:");
+        Console.Write("Gender( ");
+        WriteGenders();
+        Console.WriteLine(" ) - number only:");
         Gender gender = Gender.Other;
         try
         {
@@ -196,8 +203,7 @@ public class ConsoleUI
             DisplayAddPlayer();
         }
         
-        
-        Console.WriteLine("Level:");
+        Console.WriteLine("Level (range 1-99):");
         int level = 1;
         try
         {
@@ -215,7 +221,7 @@ public class ConsoleUI
         }
         catch (ValidationException validationException)
         {
-            Console.WriteLine(validationException.Message);
+            Console.WriteLine("Player not valid - Error(s): " + String.Join("\n", validationException.Message.Split("|")));
             DisplayAddPlayer();
         }
         catch (Exception e)
@@ -231,7 +237,7 @@ public class ConsoleUI
         Console.WriteLine("Name:");
         string name = Console.ReadLine();
         
-        Console.WriteLine("Level:");
+        Console.WriteLine("Level (range 1-99):");
         int level= 1;
         try
         {
@@ -243,7 +249,7 @@ public class ConsoleUI
             DisplayAddGuild();
         }
         
-        Console.WriteLine("Guild Leader:");
+        Console.WriteLine("Guild Leader (Optional):");
         string nameLeader =Console.ReadLine();
         
         try
@@ -252,8 +258,7 @@ public class ConsoleUI
         }
         catch (ValidationException validationException)
         {
-            Console.WriteLine(validationException.Message);
-            Console.WriteLine(DateTime.Now.AddHours(10));
+            Console.WriteLine("Guild not valid - Error(s): " + String.Join("\n", validationException.Message.Split("|")));
             DisplayAddGuild();
         }
         catch (Exception e)
