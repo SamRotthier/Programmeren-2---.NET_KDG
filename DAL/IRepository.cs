@@ -4,14 +4,14 @@ namespace MedievalMMO.DAL;
 
 public interface IRepository
 {
-    void Seed();
+    //void Seed();
     Player ReadPlayer(int id);
-    ICollection<Player> ReadAllPlayers();
-    ICollection<Player> ReadPlayersByGender(Gender gender);
+    IEnumerable<Player> ReadAllPlayers();
+    IEnumerable<Player> ReadPlayersByGender(Gender gender);
     void CreatePlayer(Player player);
     
     Guild ReadGuild(int id);
-    ICollection<Guild> ReadAllGuilds();
+    IEnumerable<Guild> ReadAllGuilds();
     IEnumerable<Guild> ReadGuildsByNameAndOrLevel(string guildName = null, int? guildLevel = null);
     void CreateGuild(Guild guild);
 

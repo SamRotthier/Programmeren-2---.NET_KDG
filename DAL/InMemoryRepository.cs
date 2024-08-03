@@ -7,7 +7,7 @@ public class InMemoryRepository : IRepository
     private static List<Player> _players = new List<Player>();
     private static List<Guild> _guilds = new List<Guild>();
     
-    public void Seed()
+    public static void Seed()
     {
         // Filling in players
         Player player1 = new Player(_players.Count+1, "Sam", new DateTime(1998, 04,11), Gender.Male, 11);
@@ -63,12 +63,12 @@ public class InMemoryRepository : IRepository
         return _players.ElementAt(id);
     }
 
-    public ICollection<Player> ReadAllPlayers()
+    public IEnumerable<Player> ReadAllPlayers()
     {
         return _players;
     }
 
-    public ICollection<Player> ReadPlayersByGender(Gender gender)
+    public IEnumerable<Player> ReadPlayersByGender(Gender gender)
     {
         //Linq Query
         return _players.Where(player => player.PlayerGender == gender).ToList();
@@ -97,7 +97,7 @@ public class InMemoryRepository : IRepository
         return _guilds.ElementAt(id);
     }
 
-    public ICollection<Guild> ReadAllGuilds()
+    public IEnumerable<Guild> ReadAllGuilds()
     {
         return _guilds;
     }

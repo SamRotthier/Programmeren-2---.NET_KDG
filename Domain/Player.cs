@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MedievalMMO.BL.Domain;
 
@@ -14,7 +15,9 @@ public class Player
     public Gender PlayerGender { get; set; }
     [Range(1,99, ErrorMessage="Player level outside of range")]
     public int PlayerLevel { get; set; }
+    [NotMapped]
     public ICollection<Monster>? PlayerMonsters { get; set; }
+    [NotMapped]
     public ICollection<Guild>? PlayerGuilds { get; set; }
     
     // constructor
@@ -26,4 +29,12 @@ public class Player
         PlayerGender = playerGender;
         PlayerLevel = playerLevel;
     }
+    
+        public Player( string playerName, DateTime playerBirthdate, Gender playerGender, int playerLevel)
+        {
+            PlayerName = playerName;
+            PlayerBirthdate = playerBirthdate;
+            PlayerGender = playerGender;
+            PlayerLevel = playerLevel;
+        }
 }

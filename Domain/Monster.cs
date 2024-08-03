@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MedievalMMO.BL.Domain;
 
@@ -6,22 +7,22 @@ public class Monster
 {
     // properties
     [Key]
-    public int MonsterId { get; private set; }
+    public int MonsterId { get; set; }
     [Required(ErrorMessage="Monster name cannot be empty")]
-    public string MonsterName { get; private set; }
-    public Gender MonsterGender { get; private set; }
+    public string MonsterName { get; set; }
+    public Gender MonsterGender { get; set; }
     [Range(1,99, ErrorMessage="level should be in range 1-99")]
-    public int MonsterLevel { get; private set; }
-    public double MonsterHealth { get; private set; }
-    public bool MonsterCanEvolve { get; private set; }
-    public int? OwnedBy { get; private set; } //PlayerId
+    public int MonsterLevel { get; set; }
+    public double MonsterHealth { get; set; }
+    public bool MonsterCanEvolve { get; set; }
+    [NotMapped]
+    public Player? OwnedBy { get; set; } //PlayerId
     
     
     
     // constructor
-    public Monster(int monsterId,string monsterName, Gender monsterGender, int monsterLevel, double monsterHealth, bool monsterCanEvolve, int? ownedBy)
+    public Monster(string monsterName, Gender monsterGender, int monsterLevel, double monsterHealth, bool monsterCanEvolve, Player ownedBy)
     {
-        MonsterId = monsterId;
         MonsterName = monsterName;
         MonsterGender = monsterGender;
         MonsterLevel = monsterLevel;
@@ -29,17 +30,13 @@ public class Monster
         MonsterCanEvolve = monsterCanEvolve;
         OwnedBy = ownedBy;
     }
-
-    // to string
-    public sealed override string ToString()
-    {
-        return $"Monster: " +
-               $"id:'{MonsterId}', " +
-               $"Name:'{MonsterName}', " +
-               $"Gender:'{MonsterGender}', " +
-               $"Level:'{MonsterLevel}', " +
-               $"Health:'{MonsterHealth}', " +
-               $"Can Evolve:'{MonsterCanEvolve}'";
-    }
     
+    public Monster(string monsterName, Gender monsterGender, int monsterLevel, double monsterHealth, bool monsterCanEvolve)
+    {
+        MonsterName = monsterName;
+        MonsterGender = monsterGender;
+        MonsterLevel = monsterLevel;
+        MonsterHealth = monsterHealth;
+        MonsterCanEvolve = monsterCanEvolve;
+    }
 }

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MedievalMMO.BL.Domain;
 
@@ -14,12 +15,21 @@ public class Guild : IValidatableObject
     [Range(1,99, ErrorMessage="level should be in range 1-99")]
     public int GuildLevel { get; set; }
     public string GuildMadeBy { get; set; } //playerId
+    [NotMapped]
     public ICollection<Player>? PlayersInGuild { get; set; } //playerId
     
     // constructor
     public Guild(int guildId,string guildName, DateTime guildMadeOn, int guildLevel, string? guildMadeBy = null)
     {
         GuildId = guildId;
+        GuildName = guildName;
+        GuildMadeOn = guildMadeOn;
+        GuildLevel = guildLevel;
+        GuildMadeBy = guildMadeBy;
+    }
+    
+    public Guild(string guildName, DateTime guildMadeOn, int guildLevel, string? guildMadeBy = null)
+    {
         GuildName = guildName;
         GuildMadeOn = guildMadeOn;
         GuildLevel = guildLevel;

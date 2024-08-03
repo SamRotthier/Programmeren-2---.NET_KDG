@@ -11,7 +11,7 @@ public class Manager: IManager
     public Manager(IRepository repository)
     {
         _repository = repository;
-        _repository.Seed();
+        InMemoryRepository.Seed();
     }
 
     public Player GetPlayer(int id)
@@ -19,19 +19,19 @@ public class Manager: IManager
         return _repository.ReadPlayer(id);
     }
 
-    public ICollection<Player> GetAllPlayers()
+    public IEnumerable<Player> GetAllPlayers()
     {
         return _repository.ReadAllPlayers();
     }
 
-    public ICollection<Player> GetPlayersByGender(Gender gender)
+    public IEnumerable<Player> GetPlayersByGender(Gender gender)
     {
         return _repository.ReadPlayersByGender(gender);
     }
 
     public Player AddPlayer(string playerName, DateTime playerBirthdate, Gender playerGender, int playerLevel)
     {
-        Player player = new Player(_repository.ReadAllPlayers().Count+1, playerName, playerBirthdate, playerGender, playerLevel);
+        Player player = new Player(_repository.ReadAllPlayers().ToList().Count+1, playerName, playerBirthdate, playerGender, playerLevel); //.ToList is so we can use IEnumerable and still know the index of the new player
         this.Validate(player);
         _repository.CreatePlayer(player);
         return player;
@@ -42,7 +42,7 @@ public class Manager: IManager
         return _repository.ReadGuild(id);
     }
 
-    public ICollection<Guild> GetAllGuilds()
+    public IEnumerable<Guild> GetAllGuilds()
     {
         return _repository.ReadAllGuilds();
     }
@@ -54,7 +54,7 @@ public class Manager: IManager
 
     public Guild AddGuild(string guildName, DateTime guildMadeOn, int guildLevel, string? guildMadeBy = null)
     {
-        Guild guild = new Guild(_repository.ReadAllGuilds().Count+1, guildName, guildMadeOn, guildLevel, guildMadeBy);
+        Guild guild = new Guild(_repository.ReadAllGuilds().ToList().Count+1, guildName, guildMadeOn, guildLevel, guildMadeBy);
         this.Validate(guild);
         _repository.CreateGuild(guild);
         return guild;
