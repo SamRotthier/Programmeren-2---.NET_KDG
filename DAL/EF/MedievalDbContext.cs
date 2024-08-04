@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using MedievalMMO.BL.Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 
 namespace MedievalMMO.DAL.EF;
