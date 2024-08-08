@@ -29,6 +29,7 @@ public class InMemoryRepository : IRepository
         Guild guild4 = new Guild(_guilds.Count+1,"gamers",new DateTime(2023, 10,1), 3);
         _guilds.Add(guild4);
         
+        /* Uitgezet voor sprint4 werkende te krijgen
         // Filling guilds in player
         player1.PlayerGuilds?.Add(guild1);
         player1.PlayerGuilds?.Add(guild2);
@@ -56,6 +57,7 @@ public class InMemoryRepository : IRepository
         
         guild4.PlayersInGuild?.Add(player3);
         guild4.PlayersInGuild?.Add(player4);
+        */
     }
     
     public Player ReadPlayer(int id)
@@ -68,9 +70,13 @@ public class InMemoryRepository : IRepository
         return _players;
     }
 
+    public IEnumerable<Player> ReadAllPlayersWithMonsters()
+    {
+        throw new NotImplementedException();
+    }
+
     public IEnumerable<Player> ReadPlayersByGender(Gender gender)
     {
-        //Linq Query
         return _players.Where(player => player.PlayerGender == gender).ToList();
         
         //Fully Written
@@ -102,6 +108,11 @@ public class InMemoryRepository : IRepository
         return _guilds;
     }
 
+    public IEnumerable<Guild> ReadAllGuildsWithPlayers()
+    {
+        throw new NotImplementedException();
+    }
+
     public IEnumerable<Guild> ReadGuildsByNameAndOrLevel(string guildName = null, int? guildLevel = null)
     {
         IEnumerable<Guild> filterList = _guilds;
@@ -120,5 +131,20 @@ public class InMemoryRepository : IRepository
     public void CreateGuild(Guild guild)
     {
         _guilds.Add(guild);
+    }
+
+    public IEnumerable<PlayerGuild> ReadAllPlayerGuildsByPlayerId(int playerId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void CreatePlayerGuild(PlayerGuild playerGuild)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DeletePlayerGuild(int playerId, int guildId)
+    {
+        throw new NotImplementedException();
     }
 }

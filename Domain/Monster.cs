@@ -15,20 +15,19 @@ public class Monster
     public int MonsterLevel { get; set; }
     public double MonsterHealth { get; set; }
     public bool MonsterCanEvolve { get; set; }
-    [NotMapped]
-    public Player? OwnedBy { get; set; } //PlayerId
+    public Player? OwnedByPlayer { get; set; }
     
     
     
     // constructor
-    public Monster(string monsterName, Gender monsterGender, int monsterLevel, double monsterHealth, bool monsterCanEvolve, Player ownedBy)
+    public Monster(string monsterName, Gender monsterGender, int monsterLevel, double monsterHealth, bool monsterCanEvolve, Player ownedByPlayer)
     {
         MonsterName = monsterName;
         MonsterGender = monsterGender;
         MonsterLevel = monsterLevel;
         MonsterHealth = monsterHealth;
         MonsterCanEvolve = monsterCanEvolve;
-        OwnedBy = ownedBy;
+        OwnedByPlayer = ownedByPlayer;
     }
     
     public Monster(string monsterName, Gender monsterGender, int monsterLevel, double monsterHealth, bool monsterCanEvolve)

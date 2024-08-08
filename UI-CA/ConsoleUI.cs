@@ -17,7 +17,7 @@ public class ConsoleUI
         _manager = manager;
     }
 
-
+    //Start methode
     public void Run(){ 
         int? input = WriteMenueAndReadInput();
         switch (input)
@@ -26,13 +26,15 @@ public class ConsoleUI
                 Console.WriteLine("Thank you for using my program, it will close now"); 
                 return;
             case 1:
-                DisplayAllPlayers();
+                DisplayAllPlayersWithMonsters();
+                //DisplayAllPlayers();
                 break;
             case 2:
                 DisplayPlayerWithGender();
                 break;
             case 3:
-                DisplayAllGuilds();
+                DisplayAllGuildsWithPlayers();
+                //DisplayAllGuilds();
                 break;
             case 4:
                 DisplayGuildsWithNameAndOrLevel();
@@ -43,16 +45,20 @@ public class ConsoleUI
             case 6:
                 DisplayAddGuild();
                 break;
+            case 7:
+                DisplayAddPlayerToGuild();
+                break;
+            case 8:
+                DisplayRemovePlayerFromGuild();
+                break;
             default:
                 Console.WriteLine("Something went wrong, try again\n"); 
                 break;
         }
         Run();
     }
-
-
-
-    // displays the menue for the application
+    
+    // Displays the menu for the application
     private int? WriteMenueAndReadInput()
     {
         Console.WriteLine("What Would you like to do?"); 
@@ -64,7 +70,9 @@ public class ConsoleUI
         Console.WriteLine("4) Show guilds with name and/or level"); //2 conditions - search on name and/or level
         Console.WriteLine("5) Add a Player to List");
         Console.WriteLine("6) Add a Guild to List");
-        Console.WriteLine("Choice (0-6):");
+        Console.WriteLine("7) Add a Player to a Guild");
+        Console.WriteLine("8) Remove a Player from a Guild");
+        Console.WriteLine("Choice (0-8):");
         try
         {
             int? input = int.Parse(Console.ReadLine()!);
@@ -88,6 +96,18 @@ public class ConsoleUI
             Console.WriteLine(PlayerExtensions.GetPlayerInfo(player));
         }
         Console.WriteLine(""); 
+    }
+    
+    private void DisplayAllPlayersWithMonsters()
+    {
+        IEnumerable<Player> players= _manager.GetAllPlayersWithMonsters();
+        Console.WriteLine("Here are all the players with their monsters:");
+        foreach (var player in players)
+        {
+            Console.WriteLine(PlayerExtensions.GetPlayerWithMonsterInfo(player));
+        }
+        Console.WriteLine(""); 
+        
     }
     
     // Displays the different genders
@@ -115,6 +135,7 @@ public class ConsoleUI
         catch (Exception e)
         {
             Console.WriteLine("Not a valid input\n");
+            Run();
         }
         
         Gender gender = (Gender)inputGender; //casting the number to the enum
@@ -146,6 +167,18 @@ public class ConsoleUI
         Console.WriteLine("");    
     }
     
+    // Display all guilds with the players eager loaded aswell
+    private void DisplayAllGuildsWithPlayers()
+    {
+        IEnumerable<Guild> guilds = _manager.GetAllGuildsWithPlayers();
+        Console.WriteLine("Here are all the guilds With their players:");
+        foreach (var guild in guilds)
+        {
+            Console.WriteLine(GuildExtensions.GetGuildWithPlayerInfo(guild));   
+        }
+        Console.WriteLine("");    
+    }
+    
     // Displays all the guild that fall into the search criteria
     private void DisplayGuildsWithNameAndOrLevel()
     {
@@ -168,10 +201,11 @@ public class ConsoleUI
         catch (Exception e)
         {
             Console.WriteLine("Not a valid input\n");
+            Run();
         }
     }
     
-    
+    // Display the add player functionality
     private void DisplayAddPlayer()
     {
         Console.WriteLine("Add Player"); 
@@ -227,9 +261,11 @@ public class ConsoleUI
         catch (Exception e)
         {
             Console.WriteLine("There has been an unexpected problem!");
+            Run();
         }
     }
     
+    // Display the add guild functionality
     private void DisplayAddGuild()
     {
         Console.WriteLine("Add Guild"); 
@@ -250,7 +286,7 @@ public class ConsoleUI
         }
         
         Console.WriteLine("Guild Leader (Optional):");
-        string nameLeader =Console.ReadLine();
+        string nameLeader = Console.ReadLine();
         
         try
         {
@@ -264,6 +300,93 @@ public class ConsoleUI
         catch (Exception e)
         {
             Console.WriteLine("There has been an unexpected problem!");
+            Run();
         }
     }
+    
+    // Display the add player to a new guild functionality
+    private void DisplayAddPlayerToGuild()
+    {
+        Console.WriteLine("Which Player would you like to add to a new Guild?");
+
+        int selectedPlayerId = SelectPlayer();
+        
+        Console.WriteLine("Which Guild would you like to assign to this Player?");
+        IEnumerable<Guild> guildsToSelect = _manager.GetAllGuilds();
+        foreach (Guild g in guildsToSelect)
+        {
+            Console.WriteLine($"['{g.GuildId}']: '{g.GuildName}'");
+        }
+        
+        int selectedGuildId = SelectGuild();
+        
+        try
+        {
+            _manager.CreatePlayerGuild(selectedPlayerId, selectedGuildId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            Run();
+        }
+    }
+
+    // Display the remove player of a guild functionality
+    private void DisplayRemovePlayerFromGuild()
+    {
+        Console.WriteLine("Which Player would you like to remove a Guild from?:");
+
+        int selectedPlayerId = SelectPlayer();
+        
+        Console.WriteLine("Which of the player's Guilds would you like to remove from this Player?");
+        IEnumerable<PlayerGuild> guildsToSelect = _manager.GetAllPlayerGuildsByPlayerId(selectedPlayerId);
+        foreach (PlayerGuild pg in guildsToSelect)
+        {
+            Console.WriteLine($"['{pg.GuildId}']: '{pg.Guild.GuildName}'");
+        }
+        
+        int selectedGuildId = SelectGuild();
+        
+        _manager.DeletePlayerGuild(selectedPlayerId, selectedGuildId);
+    }
+
+    private int SelectPlayer()
+    {
+        IEnumerable<Player> playersToSelect = _manager.GetAllPlayers();
+        foreach (Player p in playersToSelect)
+        {
+            Console.WriteLine($"['{p.PlayerId}']: '{p.PlayerName}'");
+        }
+        Console.WriteLine($"Please enter a Player ID:");
+        int selectedPlayerId = 0;
+        try
+        {
+            selectedPlayerId = Convert.ToInt32(Console.ReadLine());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Something went wrong while trying to parse the PlayerID, make sure you enter a valid number from the list");
+            Run();
+        }
+
+        return selectedPlayerId;
+    }
+
+    private int SelectGuild()
+    {
+        Console.WriteLine($"Please enter a Guild ID:");
+        int selectedGuildId = 0;
+        try
+        {
+            selectedGuildId = Convert.ToInt32(Console.ReadLine());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Something went wrong while trying to parse the PlayerID, make sure you enter a valid number from the list");
+            Run();
+        }
+
+        return selectedGuildId;
+    }
+    
 }

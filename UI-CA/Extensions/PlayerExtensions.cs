@@ -15,4 +15,23 @@ public class PlayerExtensions
         //+ $"Monsters:'{PlayerMonsters}', " +
         //$"Guilds:'{PlayerGuilds}'";
     }
+
+    public static string GetPlayerWithMonsterInfo(Player player)
+    {
+        string playerInfoText =  $"Player '{player.PlayerName}' has a level of '{player.PlayerLevel}' and has the following monsters:";
+
+        if (player.PlayerMonsters != null)
+        {
+            foreach (var monster in player.PlayerMonsters)
+            {
+                playerInfoText += $"\n\t Monster name is '{monster.MonsterName}' and has a level of '{monster.MonsterLevel}' and a max health pool of '{monster.MonsterHealth}'";
+            }
+        }
+        else
+        {
+            playerInfoText += $"\n\t No Monsters Found";
+        }
+
+        return playerInfoText;
+    }
 }

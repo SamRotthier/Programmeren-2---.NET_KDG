@@ -10,6 +10,7 @@ public class MedievalDbContext : DbContext
     public DbSet<Player> Players { get; set; }
     public DbSet<Guild> Guilds { get; set; }
     public DbSet<Monster> Monsters { get; set; }
+    public DbSet<PlayerGuild> PlayerGuild { get; set; }
     
     public MedievalDbContext(DbContextOptions options) : base(options)
     {
@@ -25,6 +26,41 @@ public class MedievalDbContext : DbContext
         }
             
         optionsBuilder.LogTo(message => Debug.WriteLine(message), LogLevel.Information);
+    }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<PlayerGuild>()
+            .HasOne(pg => pg.Player)
+            .WithMany(p => p.PlayerGuilds)
+            .HasForeignKey(pg => pg.PlayerId);
+
+        modelBuilder.Entity<Player>()
+            .HasMany(p => p.PlayerGuilds)
+            .WithOne(pg => pg.Player);
+        
+        modelBuilder.Entity<PlayerGuild>()
+            .HasOne(pg => pg.Guild)
+            .WithMany(g => g.PlayersInGuild)
+            .HasForeignKey(pg => pg.GuildId);
+        
+        modelBuilder.Entity<Guild>()
+            .HasMany(g => g.PlayersInGuild)
+            .WithOne(pg => pg.Guild);
+        
+        modelBuilder.Entity<PlayerGuild>()
+            .HasKey(pg => new { pg.PlayerId, pg.GuildId });
+        
+        modelBuilder.Entity<Monster>()
+            .HasOne(m => m.OwnedByPlayer)
+            .WithMany(p => p.PlayerMonsters)
+            .HasForeignKey("PlayerId");
+        
+        modelBuilder.Entity<Player>()
+            .HasMany(p => p.PlayerMonsters)
+            .WithOne(m => m.OwnedByPlayer);
     }
 
     public bool CreateDatabase(bool dropDatabase)

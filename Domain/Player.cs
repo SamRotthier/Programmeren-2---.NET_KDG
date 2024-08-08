@@ -15,10 +15,8 @@ public class Player
     public Gender PlayerGender { get; set; }
     [Range(1,99, ErrorMessage="Player level outside of range")]
     public int PlayerLevel { get; set; }
-    [NotMapped]
     public ICollection<Monster>? PlayerMonsters { get; set; }
-    [NotMapped]
-    public ICollection<Guild>? PlayerGuilds { get; set; }
+    public ICollection<PlayerGuild>? PlayerGuilds { get; set; }
     
     // constructor
     public Player(int playerId, string playerName, DateTime playerBirthdate, Gender playerGender, int playerLevel)

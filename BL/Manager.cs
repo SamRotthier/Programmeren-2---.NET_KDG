@@ -24,6 +24,11 @@ public class Manager: IManager
         return _repository.ReadAllPlayers();
     }
 
+    public IEnumerable<Player> GetAllPlayersWithMonsters()
+    {
+        return _repository.ReadAllPlayersWithMonsters();
+    }
+
     public IEnumerable<Player> GetPlayersByGender(Gender gender)
     {
         return _repository.ReadPlayersByGender(gender);
@@ -47,6 +52,21 @@ public class Manager: IManager
         return _repository.ReadAllGuilds();
     }
 
+    public IEnumerable<Guild> GetAllGuildsWithPlayers()
+    {
+        return _repository.ReadAllGuildsWithPlayers();
+    }
+
+    public void DeletePlayerGuild(int playerId, int guildId)
+    {
+        _repository.DeletePlayerGuild(playerId, guildId);
+    }
+
+    public IEnumerable<PlayerGuild> GetAllPlayerGuildsByPlayerId(int playerId)
+    {
+        return _repository.ReadAllPlayerGuildsByPlayerId(playerId);
+    }
+
     public IEnumerable<Guild> GetGuildsByNameAndOrLevel(string guildName = null, int? guildLevel = null)
     {
         return _repository.ReadGuildsByNameAndOrLevel(guildName, guildLevel);
@@ -59,7 +79,15 @@ public class Manager: IManager
         _repository.CreateGuild(guild);
         return guild;
     }
-    
+
+    public void CreatePlayerGuild(int playerId, int guildId)
+    {
+       Player player = _repository.ReadPlayer(playerId);
+       Guild guild = _repository.ReadGuild(guildId);
+       PlayerGuild playerGuild = new PlayerGuild(player, guild, DateTime.Now); 
+        _repository.CreatePlayerGuild(playerGuild);
+    }
+
     private void Validate(Player player)
     {
         List<ValidationResult> errors = new List<ValidationResult>();

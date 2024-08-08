@@ -14,9 +14,8 @@ public class Guild : IValidatableObject
     public DateTime GuildMadeOn { get; set; }
     [Range(1,99, ErrorMessage="level should be in range 1-99")]
     public int GuildLevel { get; set; }
-    public string GuildMadeBy { get; set; } //playerId
-    [NotMapped]
-    public ICollection<Player>? PlayersInGuild { get; set; } //playerId
+    public string GuildMadeBy { get; set; }
+    public ICollection<PlayerGuild>? PlayersInGuild { get; set; }
     
     // constructor
     public Guild(int guildId,string guildName, DateTime guildMadeOn, int guildLevel, string? guildMadeBy = null)

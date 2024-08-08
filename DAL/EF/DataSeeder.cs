@@ -9,7 +9,7 @@ public class DataSeeder
     public static void Seed(MedievalDbContext context)
     {
         
-     // Filling in players
+        // Filling in players
         Player playerSam = new Player( "Sam", new DateTime(1998, 04,11), Gender.Male, 11);
         Player playerPascal = new Player("Pascal",new DateTime(1970, 08,25), Gender.Male, 25);
         Player playerElyse = new Player("Elyse",new DateTime(2001, 07,16), Gender.Female, 35);
@@ -28,40 +28,18 @@ public class DataSeeder
         Monster monsterCharmender = new Monster( "Charmender", Gender.Other, 30, 100.5, false,null);
         Monster monsterCharizard = new Monster("Charizard", Gender.Other, 25, 100.5, false, playerYoda);
         
-        
-        // Filling guilds in player
-        playerSam.PlayerGuilds?.Add(guildKillers);
-        playerSam.PlayerGuilds?.Add(guildSkillers);
-        playerSam.PlayerGuilds?.Add(guildSmitters);
-        
-        playerPascal.PlayerGuilds?.Add(guildKillers);
-        
-        playerElyse.PlayerGuilds?.Add(guildGamers);
-        
-        playerYoda.PlayerGuilds?.Add(guildKillers);
-        playerYoda.PlayerGuilds?.Add(guildSkillers);
-        playerYoda.PlayerGuilds?.Add(guildSmitters);
-        playerYoda.PlayerGuilds?.Add(guildGamers);
-        
-        // Filling players in guild - Door EF is dit eigenlijk overbodig
-        guildKillers.PlayersInGuild?.Add(playerSam);
-        guildKillers.PlayersInGuild?.Add(playerPascal);
-        guildKillers.PlayersInGuild?.Add(playerYoda);
-        
-        guildSkillers.PlayersInGuild?.Add(playerSam);
-        guildSkillers.PlayersInGuild?.Add(playerYoda);
-        
-        guildSmitters.PlayersInGuild?.Add(playerSam);
-        guildSmitters.PlayersInGuild?.Add(playerYoda);
-        
-        guildGamers.PlayersInGuild?.Add(playerElyse);
-        guildGamers.PlayersInGuild?.Add(playerYoda);
-        
         playerSam.PlayerMonsters?.Add(monsterPikachu);
         playerPascal.PlayerMonsters?.Add(monsterGravler);
         playerPascal.PlayerMonsters?.Add(monsterRaichu);
         playerYoda.PlayerMonsters?.Add(monsterCharizard);
+
+        context.SaveChanges();
         
+        PlayerGuild playerGuildSK = new PlayerGuild(playerSam, guildKillers, new DateTime(2020, 11, 02, 14, 00, 00));
+        PlayerGuild playerGuildPK = new PlayerGuild(playerPascal, guildKillers, new DateTime(2022, 12, 05, 19, 00, 00));
+        PlayerGuild playerGuildSG = new PlayerGuild(playerSam, guildGamers, new DateTime(2023, 04, 08, 14, 00, 00));
+        PlayerGuild playerGuildES = new PlayerGuild(playerElyse, guildSmitters, new DateTime(2021, 01, 05, 08, 00, 00));
+        PlayerGuild playerGuildYS = new PlayerGuild(playerYoda, guildSmitters, new DateTime(2021, 01, 05, 12, 00, 00));
         
         
         context.Players.Add(playerSam);
@@ -77,6 +55,11 @@ public class DataSeeder
         context.Monsters.Add(monsterRaichu);
         context.Monsters.Add(monsterCharmender);
         context.Monsters.Add(monsterCharizard);
+        context.PlayerGuild.Add(playerGuildSK);
+        context.PlayerGuild.Add(playerGuildPK);
+        context.PlayerGuild.Add(playerGuildSG);
+        context.PlayerGuild.Add(playerGuildES);
+        context.PlayerGuild.Add(playerGuildYS);
         
         context.SaveChanges();
         context.ChangeTracker.Clear();

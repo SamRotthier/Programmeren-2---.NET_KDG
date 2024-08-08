@@ -21,6 +21,13 @@ public class Repository : IRepository
     {
         return _ctx.Players;
     }
+    
+    public IEnumerable<Player> ReadAllPlayersWithMonsters()
+    {
+        return _ctx.Players
+            .Include(p => p.PlayerMonsters)
+            .ToList();
+    }
 
     public IEnumerable<Player> ReadPlayersByGender(Gender gender)
     {
@@ -41,6 +48,35 @@ public class Repository : IRepository
     public IEnumerable<Guild> ReadAllGuilds()
     {
         return _ctx.Guilds;
+    }
+    
+    public IEnumerable<Guild> ReadAllGuildsWithPlayers()
+    {//Eager loading
+        return _ctx.Guilds
+            .Include(g => g.PlayersInGuild)
+            .ThenInclude(pg => pg.Player)
+            .ToList();
+    }
+    
+    public IEnumerable<PlayerGuild> ReadAllPlayerGuildsByPlayerId(int playerId)
+    {
+        return _ctx.PlayerGuild.Where(pg => pg.PlayerId == playerId);
+    }
+
+    public void CreatePlayerGuild(PlayerGuild playerGuild)
+    {
+        _ctx.PlayerGuild.Add(playerGuild);
+        _ctx.SaveChanges();
+    }
+
+    public void DeletePlayerGuild(int playerId, int guildId)
+    {
+      PlayerGuild playerGuild = _ctx.PlayerGuild.Find(playerId, guildId);
+      if (playerGuild != null)
+      {
+          _ctx.PlayerGuild.Remove(playerGuild);
+          _ctx.SaveChanges();
+      }
     }
 
     public IEnumerable<Guild> ReadGuildsByNameAndOrLevel(string guildName = null, int? guildLevel = null)

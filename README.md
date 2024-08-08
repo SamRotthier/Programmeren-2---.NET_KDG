@@ -37,3 +37,17 @@ WHERE "g"."GuildLevel" = @__guildLevel_Value_0
 SELECT "g"."GuildId", "g"."GuildLevel", "g"."GuildMadeBy", "g"."GuildMadeOn", "g"."GuildName"
 FROM "Guilds" AS "g"
 ```
+
+## Sprint 4
+
+```mermaid
+classDiagram
+  class Player
+  class Guild
+  class PlayerGuild
+  class Monster
+
+  Player "1" -- "*" PlayerGuild
+  Guild "1" -- "*" PlayerGuild   
+  Monster "*" -- "1" Player   
+```
