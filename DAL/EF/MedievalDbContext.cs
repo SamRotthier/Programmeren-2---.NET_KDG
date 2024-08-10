@@ -39,7 +39,8 @@ public class MedievalDbContext : DbContext
 
         modelBuilder.Entity<Player>()
             .HasMany(p => p.PlayerGuilds)
-            .WithOne(pg => pg.Player);
+            .WithOne(pg => pg.Player)
+            .IsRequired(false);
         
         modelBuilder.Entity<PlayerGuild>()
             .HasOne(pg => pg.Guild)
@@ -48,7 +49,8 @@ public class MedievalDbContext : DbContext
         
         modelBuilder.Entity<Guild>()
             .HasMany(g => g.PlayersInGuild)
-            .WithOne(pg => pg.Guild);
+            .WithOne(pg => pg.Guild)
+            .IsRequired(false);
         
         modelBuilder.Entity<PlayerGuild>()
             .HasKey(pg => new { pg.PlayerId, pg.GuildId });
@@ -56,11 +58,13 @@ public class MedievalDbContext : DbContext
         modelBuilder.Entity<Monster>()
             .HasOne(m => m.OwnedByPlayer)
             .WithMany(p => p.PlayerMonsters)
-            .HasForeignKey("PlayerId");
+            .HasForeignKey("PlayerId")
+            .IsRequired(false);
         
         modelBuilder.Entity<Player>()
             .HasMany(p => p.PlayerMonsters)
-            .WithOne(m => m.OwnedByPlayer);
+            .WithOne(m => m.OwnedByPlayer)
+            .IsRequired(false);
     }
 
     public bool CreateDatabase(bool dropDatabase)

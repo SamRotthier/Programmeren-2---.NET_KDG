@@ -315,7 +315,7 @@ public class ConsoleUI
         IEnumerable<Guild> guildsToSelect = _manager.GetAllGuilds();
         foreach (Guild g in guildsToSelect)
         {
-            Console.WriteLine($"['{g.GuildId}']: '{g.GuildName}'");
+            Console.WriteLine($"[{g.GuildId}]: {g.GuildName}");
         }
         
         int selectedGuildId = SelectGuild();
@@ -342,7 +342,7 @@ public class ConsoleUI
         IEnumerable<PlayerGuild> guildsToSelect = _manager.GetAllPlayerGuildsByPlayerId(selectedPlayerId);
         foreach (PlayerGuild pg in guildsToSelect)
         {
-            Console.WriteLine($"['{pg.GuildId}']: '{pg.Guild.GuildName}'");
+            Console.WriteLine($"[{pg.GuildId}]: {pg.Guild.GuildName}");
         }
         
         int selectedGuildId = SelectGuild();
@@ -355,7 +355,7 @@ public class ConsoleUI
         IEnumerable<Player> playersToSelect = _manager.GetAllPlayers();
         foreach (Player p in playersToSelect)
         {
-            Console.WriteLine($"['{p.PlayerId}']: '{p.PlayerName}'");
+            Console.WriteLine($"[{p.PlayerId}]: {p.PlayerName}");
         }
         Console.WriteLine($"Please enter a Player ID:");
         int selectedPlayerId = 0;

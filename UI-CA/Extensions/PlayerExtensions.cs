@@ -20,7 +20,7 @@ public class PlayerExtensions
     {
         string playerInfoText =  $"Player '{player.PlayerName}' has a level of '{player.PlayerLevel}' and has the following monsters:";
 
-        if (player.PlayerMonsters != null)
+        if (player.PlayerMonsters != null && player.PlayerMonsters.Count > 0)
         {
             foreach (var monster in player.PlayerMonsters)
             {
