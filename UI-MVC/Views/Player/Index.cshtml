@@ -1,0 +1,32 @@
+@using MedievalMMO.BL.Domain
+@model IEnumerable<MedievalMMO.BL.Domain.Player>
+
+@{
+    ViewBag.Title = "List of All Players";
+    Layout = "_Layout";
+}
+
+<h2>List of All Players</h2>
+
+<table class="table">
+    <tr>
+        <td>Player Id</td>
+        <td>Player Name</td>
+        <td>Player Birthdate</td>
+        <td>Player Gender</td>
+        <td>Player Level</td>
+        <td>details Page</td>
+    </tr>
+@foreach (Player p in Model)
+{
+    <tr>
+        <td>@p.PlayerId</td>
+        <td>@p.PlayerName</td>
+        <td>@p.PlayerBirthdate.ToString("yyyy/MM/dd")</td>
+        <td>@(string.IsNullOrEmpty(p.PlayerGender.ToString())? "No Known Gender" : p.PlayerGender)</td>
+        <td>@(string.IsNullOrEmpty(p.PlayerLevel.ToString())? "No Known Level" : p.PlayerLevel)</td>
+        <td><a asp-controller="Player" asp-action="Details" asp-route-playerId="@p.PlayerId">Details</a></td>
+    </tr>
+}
+
+</table>

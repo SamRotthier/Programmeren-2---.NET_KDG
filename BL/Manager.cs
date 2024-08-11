@@ -29,6 +29,11 @@ public class Manager: IManager
         return _repository.ReadAllPlayersWithMonsters();
     }
 
+    public Player GetPlayerWithGuilds(int id)
+    {
+        return _repository.ReadPlayerWithGuilds(id);
+    }
+
     public IEnumerable<Player> GetPlayersByGender(Gender gender)
     {
         return _repository.ReadPlayersByGender(gender);

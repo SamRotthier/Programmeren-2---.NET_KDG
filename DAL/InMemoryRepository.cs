@@ -75,6 +75,11 @@ public class InMemoryRepository : IRepository
         throw new NotImplementedException();
     }
 
+    public Player ReadPlayerWithGuilds(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public IEnumerable<Player> ReadPlayersByGender(Gender gender)
     {
         return _players.Where(player => player.PlayerGender == gender).ToList();

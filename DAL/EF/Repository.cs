@@ -28,6 +28,15 @@ public class Repository : IRepository
             .Include(p => p.PlayerMonsters)
             .ToList();
     }
+    
+    public Player ReadPlayerWithGuilds(int id)
+    {
+        return _ctx.Players
+            .Include(p => p.PlayerMonsters)
+            .Include(p => p.PlayerGuilds)
+            .ThenInclude(pg => pg.Guild)
+            .SingleOrDefault(p => p.PlayerId == id);
+    }
 
     public IEnumerable<Player> ReadPlayersByGender(Gender gender)
     {

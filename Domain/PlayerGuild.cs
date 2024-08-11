@@ -10,6 +10,7 @@ public class PlayerGuild
     public int GuildId { get; set; }
     [Required]
     public Guild Guild { get; set; }
+    [Required]
     public DateTime PlayerJoinedGuildOn { get; set; }
 
     public PlayerGuild(Player player, Guild guild, DateTime playerJoinedGuildOn)
@@ -17,6 +18,13 @@ public class PlayerGuild
         Player = player;
         Guild = guild;
         PlayerJoinedGuildOn = playerJoinedGuildOn;
+    }
+    
+    public PlayerGuild(Player player, Guild guild)
+    {
+        Player = player;
+        Guild = guild;
+        PlayerJoinedGuildOn = DateTime.Now;
     }
 
     public PlayerGuild()

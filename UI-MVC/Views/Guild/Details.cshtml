@@ -1,0 +1,16 @@
+﻿@model MedievalMMO.BL.Domain.Guild
+
+@{
+    ViewBag.Title = "Guild Details";
+    Layout = "_Layout";
+}
+
+<h2>Guild Details</h2>
+
+<p><strong>Guild Id: </strong><span>@Model.GuildId</span></p>
+<p><strong>Guild Name: </strong><span>@Model.GuildName</span></p>
+<p><strong>Guild Made On: </strong><span>@(string.IsNullOrEmpty(Model.GuildMadeOn.ToString("yyyy/MM/dd"))? "No Start Date Known" : Model.GuildMadeOn.ToString("yyyy/MM/dd"))</span></p>
+<p><strong>Guild Level: </strong><span>@(string.IsNullOrEmpty(Model.GuildLevel.ToString())? "No Known Level" : Model.GuildLevel)</span></p>
+<p><strong>Guild Leader: </strong><span>@(string.IsNullOrEmpty(Model.GuildMadeBy)? "No Known Leader" : Model.GuildMadeBy)</span></p>
+
+<strong><a asp-controller="Player" asp-action="Index">Back to Player Selection</a></strong>

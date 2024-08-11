@@ -1,0 +1,37 @@
+@using MedievalMMO.BL.Domain
+@model MedievalMMO.BL.Domain.Player
+
+@{
+    ViewBag.Title = "Player Details";
+    Layout = "_Layout";
+}
+
+<h2>Player Details</h2>
+
+<p><strong>Player Id: </strong><span>@Model.PlayerId</span></p>
+<p><strong>Player Name: </strong><span>@Model.PlayerName</span></p>
+<p><strong>Player Birthdate: </strong><span>@Model.PlayerBirthdate.ToString("yyyy/MM/dd")</span></p>
+<p><strong>Player Gender: </strong><span>@(string.IsNullOrEmpty(Model.PlayerGender.ToString())? "No Known Gender" : Model.PlayerGender)</span></p>
+<p><strong>Player Level: </strong><span>@(string.IsNullOrEmpty(Model.PlayerLevel.ToString())? "No Known Level" : Model.PlayerLevel)</span></p>
+
+
+<table class="table">
+    <tr>
+        <td>Guild Id</td>
+        <td>Guild Name</td>
+        <td>Player Join Date</td>
+        <td>Details</td>
+    </tr>
+    
+    @foreach (PlayerGuild pg in Model.PlayerGuilds)
+    {
+        <tr>
+            <td>@pg.GuildId</td>
+            <td>@pg.Guild.GuildName</td>
+            <td>@pg.PlayerJoinedGuildOn.ToString("yyyy/MM/dd")</td>
+            <td><a asp-controller="Guild" asp-action="Details" asp-route-GuildId="@pg.GuildId">Details</a></td>
+        </tr>
+    }
+</table>
+
+<strong><a asp-controller="Player" asp-action="Index">Back to Player Selection</a></strong>
