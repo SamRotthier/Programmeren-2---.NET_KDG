@@ -41,7 +41,7 @@ public class Manager: IManager
 
     public Player AddPlayer(string playerName, DateTime playerBirthdate, Gender playerGender, int playerLevel)
     {
-        Player player = new Player(_repository.ReadAllPlayers().ToList().Count+1, playerName, playerBirthdate, playerGender, playerLevel); //.ToList is so we can use IEnumerable and still know the index of the new player
+        Player player = new Player(playerName, playerBirthdate, playerGender, playerLevel); //_repository.ReadAllPlayers().ToList().Count+1,
         this.Validate(player);
         _repository.CreatePlayer(player);
         return player;
@@ -79,7 +79,7 @@ public class Manager: IManager
 
     public Guild AddGuild(string guildName, DateTime guildMadeOn, int guildLevel, string? guildMadeBy = null)
     {
-        Guild guild = new Guild(_repository.ReadAllGuilds().ToList().Count+1, guildName, guildMadeOn, guildLevel, guildMadeBy);
+        Guild guild = new Guild( guildName, guildMadeOn, guildLevel, guildMadeBy);//_repository.ReadAllGuilds().ToList().Count+1,
         this.Validate(guild);
         _repository.CreateGuild(guild);
         return guild;
@@ -91,6 +91,25 @@ public class Manager: IManager
        Guild guild = _repository.ReadGuild(guildId);
        PlayerGuild playerGuild = new PlayerGuild(player, guild, DateTime.Now); 
         _repository.CreatePlayerGuild(playerGuild);
+    }
+    
+    public Monster GetMonster(int id)
+    {
+        return _repository.ReadMonster(id);
+    }
+
+    public IEnumerable<Monster> GetAllMonsters()
+    {
+        return _repository.ReadAllMonsters();
+    }
+
+    public Monster AddMonster(string monsterName, Gender monsterGender, int monsterLevel, double monsterHealth,
+        bool monsterCanEvolve)
+    {
+        Monster monster = new Monster(monsterName, monsterGender, monsterLevel, monsterHealth,monsterCanEvolve ); //.ToList is so we can use IEnumerable and still know the index of the new player
+        this.Validate(monster);
+        _repository.CreateMonster(monster);
+        return monster;
     }
 
     private void Validate(Player player)
@@ -107,6 +126,16 @@ public class Manager: IManager
     {
         List<ValidationResult> errors = new List<ValidationResult>();
         bool valid = Validator.TryValidateObject(guild, new ValidationContext(guild), errors, true);
+        if (!valid)
+        {
+            throw new ValidationException( string.Join("|", errors));
+        }
+    }
+    
+    private void Validate(Monster monster)
+    {
+        List<ValidationResult> errors = new List<ValidationResult>();
+        bool valid = Validator.TryValidateObject(monster, new ValidationContext(monster), errors,true);
         if (!valid)
         {
             throw new ValidationException( string.Join("|", errors));

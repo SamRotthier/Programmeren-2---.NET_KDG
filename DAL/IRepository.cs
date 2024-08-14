@@ -20,4 +20,7 @@ public interface IRepository
     IEnumerable<PlayerGuild> ReadAllPlayerGuildsByPlayerId(int playerId);
     void CreatePlayerGuild(PlayerGuild playerGuild);
     void DeletePlayerGuild(int playerId, int guildId);
+    Monster ReadMonster(int id);
+    IEnumerable<Monster> ReadAllMonsters();
+    void CreateMonster(Monster monster);
 }

@@ -25,6 +25,7 @@ public class PlayerController : Controller
     {
         return View();
     }
+    
     [HttpPost]
     public IActionResult Add(NewPlayerModel newPlayer)
     {
@@ -33,8 +34,8 @@ public class PlayerController : Controller
             return View(newPlayer);
         }
 
-        _mgr.AddPlayer(newPlayer.PlayerName, newPlayer.PlayerBirthdate, newPlayer.PlayerGender, newPlayer.PlayerLevel);
-        return RedirectToAction("Index");
+        Player player = _mgr.AddPlayer(newPlayer.PlayerName, newPlayer.PlayerBirthdate, newPlayer.PlayerGender, newPlayer.PlayerLevel);
+        return RedirectToAction("Details", "Player", new{PlayerId = player.PlayerId});
     }
     
     public IActionResult Details(int playerId)

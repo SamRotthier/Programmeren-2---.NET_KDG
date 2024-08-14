@@ -23,10 +23,9 @@
         <td>@p.PlayerId</td>
         <td>@p.PlayerName</td>
         <td>@p.PlayerBirthdate.ToString("yyyy/MM/dd")</td>
-        <td>@(string.IsNullOrEmpty(p.PlayerGender.ToString())? "No Known Gender" : p.PlayerGender)</td>
-        <td>@(string.IsNullOrEmpty(p.PlayerLevel.ToString())? "No Known Level" : p.PlayerLevel)</td>
+        <td>@(p.PlayerGender?.ToString() ?? "No Known Gender")</td>
+        <td>@(p.PlayerLevel?.ToString() ?? "No Known Level")</td>
         <td><a asp-controller="Player" asp-action="Details" asp-route-playerId="@p.PlayerId">Details</a></td>
     </tr>
 }
-
 </table>

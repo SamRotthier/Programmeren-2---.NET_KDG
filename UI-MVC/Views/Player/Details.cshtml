@@ -11,10 +11,10 @@
 <p><strong>Player Id: </strong><span>@Model.PlayerId</span></p>
 <p><strong>Player Name: </strong><span>@Model.PlayerName</span></p>
 <p><strong>Player Birthdate: </strong><span>@Model.PlayerBirthdate.ToString("yyyy/MM/dd")</span></p>
-<p><strong>Player Gender: </strong><span>@(string.IsNullOrEmpty(Model.PlayerGender.ToString())? "No Known Gender" : Model.PlayerGender)</span></p>
-<p><strong>Player Level: </strong><span>@(string.IsNullOrEmpty(Model.PlayerLevel.ToString())? "No Known Level" : Model.PlayerLevel)</span></p>
+<p><strong>Player Gender: </strong><span>@(Model.PlayerGender?.ToString() ?? "No Known Gender")</span></p>
+<p><strong>Player Level: </strong><span>@(Model.PlayerLevel?.ToString() ?? "No Known Level")</span></p>
 
-
+<h4>Player is in Guilds:</h4>
 <table class="table">
     <tr>
         <td>Guild Id</td>

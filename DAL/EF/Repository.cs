@@ -32,7 +32,6 @@ public class Repository : IRepository
     public Player ReadPlayerWithGuilds(int id)
     {
         return _ctx.Players
-            .Include(p => p.PlayerMonsters)
             .Include(p => p.PlayerGuilds)
             .ThenInclude(pg => pg.Guild)
             .SingleOrDefault(p => p.PlayerId == id);
@@ -106,6 +105,22 @@ public class Repository : IRepository
     public void CreateGuild(Guild guild)
     {
         _ctx.Guilds.Add(guild);
+        _ctx.SaveChanges();
+    }
+    
+    public Monster ReadMonster(int id)
+    {
+        return _ctx.Monsters.Find(id);
+    }
+
+    public IEnumerable<Monster> ReadAllMonsters()
+    {
+        return _ctx.Monsters;
+    }
+
+    public void CreateMonster(Monster monster)
+    {
+        _ctx.Monsters.Add(monster);
         _ctx.SaveChanges();
     }
 }

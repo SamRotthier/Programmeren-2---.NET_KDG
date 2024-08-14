@@ -11,10 +11,11 @@ public class Guild : IValidatableObject
     [Required(ErrorMessage="Guild name cannot be empty")]
     [MinLength(2, ErrorMessage="Min Name Length is 2")]
     public string GuildName { get; set; }
+    [Required(ErrorMessage="Player start date cannot be empty")]
     public DateTime GuildMadeOn { get; set; }
     [Range(1,99, ErrorMessage="level should be in range 1-99")]
-    public int GuildLevel { get; set; }
-    public string GuildMadeBy { get; set; }
+    public int? GuildLevel { get; set; }
+    public string? GuildMadeBy { get; set; }
     public ICollection<PlayerGuild>? PlayersInGuild { get; set; }
     
     // constructor
@@ -33,6 +34,13 @@ public class Guild : IValidatableObject
         GuildMadeOn = guildMadeOn;
         GuildLevel = guildLevel;
         GuildMadeBy = guildMadeBy;
+    }
+    
+    public Guild(string guildName)
+    {
+        GuildName = guildName;
+        GuildMadeOn = DateTime.Now;
+        GuildLevel = 1;
     }
    
     IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)

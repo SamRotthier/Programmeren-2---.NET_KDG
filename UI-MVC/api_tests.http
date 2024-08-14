@@ -1,0 +1,5 @@
+POST https://localhost:7050/api/Monsters HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{"MonsterName": "Kalimero", "MonsterGender":  0, "MonsterLevel":  80, "MonsterHealth":  10.5, "MonsterCanEvolve":  false}

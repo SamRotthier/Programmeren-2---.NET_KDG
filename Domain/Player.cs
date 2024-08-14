@@ -12,9 +12,9 @@ public class Player
     public string PlayerName { get; set; }
     [Required(ErrorMessage="Player birthday cannot be empty")]
     public DateTime PlayerBirthdate { get; set; }
-    public Gender PlayerGender { get; set; }
+    public Gender? PlayerGender { get; set; }
     [Range(1,99, ErrorMessage="Player level outside of range")]
-    public int PlayerLevel { get; set; }
+    public int? PlayerLevel { get; set; }
     public ICollection<Monster>? PlayerMonsters { get; set; }
     public ICollection<PlayerGuild>? PlayerGuilds { get; set; }
     
@@ -28,6 +28,12 @@ public class Player
         PlayerLevel = playerLevel;
     }
     
+        public Player( string playerName, DateTime playerBirthdate)
+        {
+            PlayerName = playerName;
+            PlayerBirthdate = playerBirthdate;
+        }
+        
         public Player( string playerName, DateTime playerBirthdate, Gender playerGender, int playerLevel)
         {
             PlayerName = playerName;
@@ -35,4 +41,6 @@ public class Player
             PlayerGender = playerGender;
             PlayerLevel = playerLevel;
         }
+
+
 }

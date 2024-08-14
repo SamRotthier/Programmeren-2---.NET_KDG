@@ -152,4 +152,19 @@ public class InMemoryRepository : IRepository
     {
         throw new NotImplementedException();
     }
+
+    public Monster ReadMonster(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<Monster> ReadAllMonsters()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void CreateMonster(Monster monster)
+    {
+        throw new NotImplementedException();
+    }
 }

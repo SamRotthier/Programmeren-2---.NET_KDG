@@ -10,25 +10,33 @@
 
 <form asp-controller="Player" asp-action="Add" method="post">
     <div>
+        <p>
         <label asp-for="@Model.PlayerName">Player Name</label>
-        <input asp-for="@Model.PlayerName" class="form-control"/><br/>
+        <input asp-for="@Model.PlayerName" class="form-control"/>
         <span asp-validation-for="@Model.PlayerName" class="text-danger"></span>
+        </p>
     </div>
     <div>
+        <p>
         <label asp-for="@Model.PlayerBirthdate">Player Birthdate</label>
-        <input asp-for="@Model.PlayerBirthdate" class="form-control" type="date"/><br/>
+        <input asp-for="@Model.PlayerBirthdate" class="form-control" type="date"/>
         <span asp-validation-for="@Model.PlayerBirthdate" class="text-danger"></span>
+        </p>
     </div>
     <div>
+        <p>
         <label asp-for="@Model.PlayerGender">Player Gender</label>
-        <select asp-for="@Model.PlayerGender" asp-items="new SelectList(Enum.GetValues(typeof(Gender)))" class="form-select" required="required">
-        </select><br/>
+        <select asp-for="@Model.PlayerGender" asp-items="new SelectList(Enum.GetValues(typeof(Gender)))" class="form-select">
+        </select>
         <span asp-validation-for="@Model.PlayerGender" class="text-danger"></span>
+        </p>
     </div>
     <div>
+        <p>
         <label asp-for="@Model.PlayerLevel">Player Level</label>
-        <input asp-for="@Model.PlayerLevel" class="form-control" type="number"/><br/>
+        <input asp-for="@Model.PlayerLevel" class="form-control"/>
         <span asp-validation-for="@Model.PlayerLevel" class="text-danger"></span>
+        </p>
     </div>
 
     <input type="submit" class="btn btn-primary"/>

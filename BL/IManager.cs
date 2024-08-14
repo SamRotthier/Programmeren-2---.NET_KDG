@@ -19,4 +19,7 @@ public interface IManager
     void CreatePlayerGuild(int playerId, int guildId);
     void DeletePlayerGuild(int playerId, int guildId);
     IEnumerable<PlayerGuild> GetAllPlayerGuildsByPlayerId(int playerId);
+    Monster GetMonster(int id);
+    IEnumerable<Monster> GetAllMonsters();
+    Monster AddMonster(string monsterName, Gender monsterGender, int monsterLevel, double monsterHealth, bool monsterCanEvolve);
 }

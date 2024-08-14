@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<MedievalDbContext>(options =>
-    options.UseSqlite("Data Source=MedievalDb.db"));
+    options.UseSqlite("Data Source=../MedievalDb.db"));
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IManager, Manager>();
 
