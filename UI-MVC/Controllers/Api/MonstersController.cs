@@ -1,5 +1,6 @@
 using MedievalMMO.BL;
 using MedievalMMO.BL.Domain;
+using MedievalMMO.UI.Web.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedievalMMO.UI.Web.Controllers.Api;

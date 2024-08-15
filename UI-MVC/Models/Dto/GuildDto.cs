@@ -10,6 +10,5 @@ public class GuildDto
     public string GuildMadeOn { get; set; }
     public int GuildLevel { get; set; }
     public string GuildMadeBy { get; set; }
-    
     public IEnumerable<PlayerGuildDto> PlayersInGuild { get; set; }
 }

@@ -1,6 +1,7 @@
 window.addEventListener("load", init)
 document.getElementById("submit-player").addEventListener("click", submitPlayer)
-
+const urlParams = new URLSearchParams(window.location.search);
+const guildId = urlParams.get('GuildId');
 const genderMap = {
     0: "Male",
     1: "Female",
@@ -8,18 +9,14 @@ const genderMap = {
     3: "Other"
 };
 
-const urlParams = new URLSearchParams(window.location.search);
-const guildId = urlParams.get('GuildId');
-console.log(guildId)
-
 function init() {
    getGuildsWithPlayers();
    loadPlayersForSelectBox();
 }
 
 function resetSubmittionSettings(){
-    let playerId = document.getElementById("player-selectbox").selectedIndex = "0"
-    let playerJoinedOn = document.getElementById("playerJoinedOnDateTime").value = ""
+    document.getElementById("player-selectbox").selectedIndex = "0"
+    document.getElementById("playerJoinedOnDateTime").value = ""
 }
 
 function getGuildsWithPlayers(){
@@ -72,22 +69,19 @@ function loadPlayersForSelectBox(){
                 let option = document.createElement("option")
                 option.setAttribute("value", `${player.playerId}`)
                 option.innerText = `${player.playerName}`
-                select.appendChild(option)
-            })}).catch(() => console.error("Failed to catch the data."))
+                select.appendChild(option)})})
+        .catch(() => console.error("Failed to catch the data."))
 }
 
 function submitPlayer(){
     let playerId = document.getElementById("player-selectbox").value
     let playerJoinedOn = document.getElementById("playerJoinedOnDateTime").value
-    console.log(playerId)
-    console.log(playerJoinedOn)
     
     let playerGuild = {
         playerId : parseInt(playerId),
         guildId : parseInt(guildId),
         playerJoinedGuildOn : playerJoinedOn
     }
-    console.log(playerGuild)
 
     fetch(`/api/PlayerGuilds/`, {
         method: "POST",

@@ -74,17 +74,25 @@ public class Repository : IRepository
     public void CreatePlayerGuild(PlayerGuild playerGuild)
     {
         _ctx.PlayerGuilds.Add(playerGuild);
-        _ctx.SaveChanges();
+        try
+        {
+            _ctx.SaveChanges();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Something went wrong with saving the PlayerGuild (was it unique?)");
+            throw;
+        }
     }
 
     public void DeletePlayerGuild(int playerId, int guildId)
     {
-      PlayerGuild playerGuild = _ctx.PlayerGuilds.Find(playerId, guildId);
-      if (playerGuild != null)
-      {
-          _ctx.PlayerGuilds.Remove(playerGuild);
-          _ctx.SaveChanges();
-      }
+        PlayerGuild playerGuild = _ctx.PlayerGuilds.Find(playerId, guildId);
+        if (playerGuild != null)
+        {
+            _ctx.PlayerGuilds.Remove(playerGuild);
+            _ctx.SaveChanges();
+        }
     }
 
     public IEnumerable<Guild> ReadGuildsByNameAndOrLevel(string guildName = null, int? guildLevel = null)
@@ -109,15 +117,6 @@ public class Repository : IRepository
             .ThenInclude(pg => pg.Player)
             .SingleOrDefault(g => g.GuildId == id);
     }
-   /* 
-    public IEnumerable<Player> ReadGuildWithPlayersNotInGuild(int id)
-    {
-        return _ctx.Players
-            .Where(p => !p.PlayerGuilds
-                .Any(pg => pg.GuildId == ))
-            .ToList();
-    }
-    */
 
     public void CreateGuild(Guild guild)
     {
@@ -143,6 +142,6 @@ public class Repository : IRepository
 
     public PlayerGuild ReadPlayerGuild(int playerId, int guildId)
     {
-       return _ctx.PlayerGuilds.Find(playerId,guildId);
+        return _ctx.PlayerGuilds.Find(playerId,guildId);
     }
 }

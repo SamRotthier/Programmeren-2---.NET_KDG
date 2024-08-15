@@ -38,7 +38,6 @@ public class PlayerGuildsController : ControllerBase
                 PlayerLevel = playerGuild.Player.PlayerLevel ?? 1
             }
         };
-            
         return Ok(playerGuildDto);
     }
     
@@ -46,8 +45,7 @@ public class PlayerGuildsController : ControllerBase
     public IActionResult Post(NewPlayerGuildDto newPlayerGuild)
     {
         PlayerGuild savedPlayerGuild = _mgr.AddPlayerGuild(newPlayerGuild.PlayerId, newPlayerGuild.GuildId, newPlayerGuild.PlayerJoinedGuildOn);
-
+        
         return CreatedAtAction("Get", new { Id = newPlayerGuild.PlayerId, Id2 = newPlayerGuild.GuildId}, savedPlayerGuild);
-        //return Ok(savedPlayerGuild);
     }
 }

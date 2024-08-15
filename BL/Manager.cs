@@ -61,12 +61,6 @@ public class Manager: IManager
     {
         return _repository.ReadAllGuildsWithPlayers();
     }
-/*
-    public IEnumerable<Player> GetGuildWithPlayersNotInGuild(int id)
-    {
-        return _repository.ReadGuildWithPlayersNotInGuild(id);
-    }
-    */
 
     public Guild GetGuildWithPlayers(int id)
     {
@@ -90,7 +84,7 @@ public class Manager: IManager
 
     public Guild AddGuild(string guildName, DateTime guildMadeOn, int guildLevel, string? guildMadeBy = null)
     {
-        Guild guild = new Guild( guildName, guildMadeOn, guildLevel, guildMadeBy);//_repository.ReadAllGuilds().ToList().Count+1,
+        Guild guild = new Guild( guildName, guildMadeOn, guildLevel, guildMadeBy);
         this.Validate(guild);
         _repository.CreateGuild(guild);
         return guild;
@@ -117,7 +111,7 @@ public class Manager: IManager
     public Monster AddMonster(string monsterName, Gender monsterGender, int monsterLevel, double monsterHealth,
         bool monsterCanEvolve)
     {
-        Monster monster = new Monster(monsterName, monsterGender, monsterLevel, monsterHealth,monsterCanEvolve ); //.ToList is so we can use IEnumerable and still know the index of the new player
+        Monster monster = new Monster(monsterName, monsterGender, monsterLevel, monsterHealth,monsterCanEvolve );
         this.Validate(monster);
         _repository.CreateMonster(monster);
         return monster;

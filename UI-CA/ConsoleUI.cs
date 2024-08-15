@@ -13,13 +13,11 @@ public class ConsoleUI
 {
     private IManager _manager;
     
-    // ConsoleUI constructor
     public ConsoleUI(IManager manager)
     {
         _manager = manager;
     }
-
-    //Start methode
+    
     public void Run(){ 
         int? input = WriteMenueAndReadInput();
         switch (input)
@@ -60,16 +58,15 @@ public class ConsoleUI
         Run();
     }
     
-    // Displays the menu for the application
     private int? WriteMenueAndReadInput()
     {
         Console.WriteLine("What Would you like to do?"); 
         Console.WriteLine("==========================");
         Console.WriteLine("0) Quit"); 
         Console.WriteLine("1) Show all players"); 
-        Console.WriteLine("2) Show players with gender"); //1 condition - search on gender
+        Console.WriteLine("2) Show players with gender"); 
         Console.WriteLine("3) Show all guilds"); 
-        Console.WriteLine("4) Show guilds with name and/or level"); //2 conditions - search on name and/or level
+        Console.WriteLine("4) Show guilds with name and/or level");
         Console.WriteLine("5) Add a Player to List");
         Console.WriteLine("6) Add a Guild to List");
         Console.WriteLine("7) Add a Player to a Guild");
@@ -88,18 +85,6 @@ public class ConsoleUI
         }
     }
     
-    // Displays all the players
-    private void DisplayAllPlayers()
-    {
-        IEnumerable<Player> players= _manager.GetAllPlayers();
-        Console.WriteLine("Here are all the players:");
-        foreach (var player in players)
-        {
-            Console.WriteLine(PlayerExtensions.GetPlayerInfo(player));
-        }
-        Console.WriteLine(""); 
-    }
-    
     private void DisplayAllPlayersWithMonsters()
     {
         IEnumerable<Player> players= _manager.GetAllPlayersWithMonsters();
@@ -112,17 +97,15 @@ public class ConsoleUI
         
     }
     
-    // Displays the different genders
     private static void WriteGenders()
     {
         Gender[] genders = Enum.GetValues<Gender>();
         foreach (var gender in genders)
         {
-            Console.Write((int)gender +")"+ gender + " "); //Writes the number of the gender in the enum and then the name of the gender
+            Console.Write((int)gender +")"+ gender + " "); 
         }
     }
     
-    // Displays the players filtered by chosen gender
     private void DisplayPlayerWithGender()
     {
         Console.Write("What gender does the player have? ");
@@ -157,19 +140,6 @@ public class ConsoleUI
         }
     }
     
-    // Displays all the guilds
-    private void DisplayAllGuilds()
-    {
-        IEnumerable<Guild> guilds = _manager.GetAllGuilds();
-        Console.WriteLine("Here are all the guilds:");
-        foreach (var guild in guilds)
-        {
-            Console.WriteLine(GuildExtensions.GetGuildInfo(guild));   
-        }
-        Console.WriteLine("");    
-    }
-    
-    // Display all guilds with the players eager loaded aswell
     private void DisplayAllGuildsWithPlayers()
     {
         IEnumerable<Guild> guilds = _manager.GetAllGuildsWithPlayers();
@@ -181,7 +151,6 @@ public class ConsoleUI
         Console.WriteLine("");    
     }
     
-    // Displays all the guild that fall into the search criteria
     private void DisplayGuildsWithNameAndOrLevel()
     {
         try
@@ -207,7 +176,6 @@ public class ConsoleUI
         }
     }
     
-    // Display the add player functionality
     private void DisplayAddPlayer()
     {
         Console.WriteLine("Add Player"); 
@@ -267,7 +235,6 @@ public class ConsoleUI
         }
     }
     
-    // Display the add guild functionality
     private void DisplayAddGuild()
     {
         Console.WriteLine("Add Guild"); 
@@ -306,7 +273,6 @@ public class ConsoleUI
         }
     }
     
-    // Display the add player to a new guild functionality
     private void DisplayAddPlayerToGuild()
     {
         Console.WriteLine("Which Player would you like to add to a new Guild?");
@@ -332,8 +298,7 @@ public class ConsoleUI
             Run();
         }
     }
-
-    // Display the remove player of a guild functionality
+    
     private void DisplayRemovePlayerFromGuild()
     {
         Console.WriteLine("Which Player would you like to remove a Guild from?:");
@@ -387,7 +352,7 @@ public class ConsoleUI
             Console.WriteLine("Something went wrong while trying to parse the PlayerID, make sure you enter a valid number from the list");
             Run();
         }
-
+        
         return selectedGuildId;
     }
     

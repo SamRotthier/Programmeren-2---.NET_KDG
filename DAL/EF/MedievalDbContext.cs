@@ -17,8 +17,6 @@ public class MedievalDbContext : DbContext
         
     }
     
-
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured){

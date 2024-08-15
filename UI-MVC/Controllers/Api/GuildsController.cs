@@ -49,7 +49,4 @@ public class GuildsController : ControllerBase
         
         return Ok(guildDto);
     }
-    
-    
-    
 }

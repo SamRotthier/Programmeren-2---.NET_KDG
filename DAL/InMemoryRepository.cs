@@ -83,19 +83,6 @@ public class InMemoryRepository : IRepository
     public IEnumerable<Player> ReadPlayersByGender(Gender gender)
     {
         return _players.Where(player => player.PlayerGender == gender).ToList();
-        
-        //Fully Written
-        /*
-        List<Player> playersWithRightGender = new List<Player>();
-        foreach (var player in _players)
-        {
-            if (player.PlayerGender == gender)
-            {
-                playersWithRightGender.Add(player);
-            }
-        }
-        return playersWithRightGender;
-        */
     }
 
     public void CreatePlayer(Player player)

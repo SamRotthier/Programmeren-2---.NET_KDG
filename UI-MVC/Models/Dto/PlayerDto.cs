@@ -1,6 +1,3 @@
-
-
-using System.ComponentModel.DataAnnotations;
 using MedievalMMO.BL.Domain;
 
 

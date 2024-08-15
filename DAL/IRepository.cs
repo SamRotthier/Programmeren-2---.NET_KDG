@@ -11,19 +11,17 @@ public interface IRepository
     Player ReadPlayerWithGuilds(int id);
     IEnumerable<Player> ReadPlayersByGender(Gender gender);
     void CreatePlayer(Player player);
-    
     Guild ReadGuild(int id);
     IEnumerable<Guild> ReadAllGuilds();
     IEnumerable<Guild> ReadAllGuildsWithPlayers();
     IEnumerable<Guild> ReadGuildsByNameAndOrLevel(string guildName = null, int? guildLevel = null);
+    Guild ReadGuildWithPlayers(int id);
     void CreateGuild(Guild guild);
     IEnumerable<PlayerGuild> ReadAllPlayerGuildsByPlayerId(int playerId);
-    //IEnumerable<Player> ReadGuildWithPlayersNotInGuild(int id);
-    Guild ReadGuildWithPlayers(int id);
+    PlayerGuild ReadPlayerGuild(int playerId, int guildId);
     void CreatePlayerGuild(PlayerGuild playerGuild);
     void DeletePlayerGuild(int playerId, int guildId);
     Monster ReadMonster(int id);
     IEnumerable<Monster> ReadAllMonsters();
     void CreateMonster(Monster monster);
-    PlayerGuild ReadPlayerGuild(int playerId, int guildId);
 }

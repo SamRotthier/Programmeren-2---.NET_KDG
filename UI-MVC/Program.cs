@@ -18,7 +18,7 @@ builder.Services.AddControllersWithViews()
 
 var app = builder.Build();
 
-InitializeDatabase(dropDatabase: true);
+InitializeDatabase(dropDatabase: false);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

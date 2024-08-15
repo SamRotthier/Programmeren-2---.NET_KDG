@@ -1,8 +1,5 @@
 window.addEventListener("load", getMonsters)
-
 document.getElementById("refresh-button").addEventListener("click", getMonsters)
-
-
 const genderMap = {
     0: "Male",
     1: "Female",
@@ -52,5 +49,4 @@ function generateMonsterTable(data){
 
        monsterTableBody.appendChild(row)
    })
-   
 }
