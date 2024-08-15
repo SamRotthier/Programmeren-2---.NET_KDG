@@ -68,21 +68,21 @@ public class Repository : IRepository
     
     public IEnumerable<PlayerGuild> ReadAllPlayerGuildsByPlayerId(int playerId)
     {
-        return _ctx.PlayerGuild.Where(pg => pg.PlayerId == playerId);
+        return _ctx.PlayerGuilds.Where(pg => pg.PlayerId == playerId);
     }
 
     public void CreatePlayerGuild(PlayerGuild playerGuild)
     {
-        _ctx.PlayerGuild.Add(playerGuild);
+        _ctx.PlayerGuilds.Add(playerGuild);
         _ctx.SaveChanges();
     }
 
     public void DeletePlayerGuild(int playerId, int guildId)
     {
-      PlayerGuild playerGuild = _ctx.PlayerGuild.Find(playerId, guildId);
+      PlayerGuild playerGuild = _ctx.PlayerGuilds.Find(playerId, guildId);
       if (playerGuild != null)
       {
-          _ctx.PlayerGuild.Remove(playerGuild);
+          _ctx.PlayerGuilds.Remove(playerGuild);
           _ctx.SaveChanges();
       }
     }
@@ -101,6 +101,23 @@ public class Repository : IRepository
         }
         return filterList.AsEnumerable();
     }
+    
+    public Guild ReadGuildWithPlayers(int id)
+    {
+        return _ctx.Guilds
+            .Include(g => g.PlayersInGuild)
+            .ThenInclude(pg => pg.Player)
+            .SingleOrDefault(g => g.GuildId == id);
+    }
+   /* 
+    public IEnumerable<Player> ReadGuildWithPlayersNotInGuild(int id)
+    {
+        return _ctx.Players
+            .Where(p => !p.PlayerGuilds
+                .Any(pg => pg.GuildId == ))
+            .ToList();
+    }
+    */
 
     public void CreateGuild(Guild guild)
     {
@@ -122,5 +139,10 @@ public class Repository : IRepository
     {
         _ctx.Monsters.Add(monster);
         _ctx.SaveChanges();
+    }
+
+    public PlayerGuild ReadPlayerGuild(int playerId, int guildId)
+    {
+       return _ctx.PlayerGuilds.Find(playerId,guildId);
     }
 }

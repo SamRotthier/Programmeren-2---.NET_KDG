@@ -5,9 +5,8 @@ namespace MedievalMMO.BL.Domain;
 
 public class Player
 {
-    // properties
     [Key]
-    public int PlayerId { get; set; } // to make relations between classes
+    public int PlayerId { get; set; }
     [Required(ErrorMessage="Player name cannot be empty")]
     public string PlayerName { get; set; }
     [Required(ErrorMessage="Player birthday cannot be empty")]
@@ -18,7 +17,6 @@ public class Player
     public ICollection<Monster>? PlayerMonsters { get; set; }
     public ICollection<PlayerGuild>? PlayerGuilds { get; set; }
     
-    // constructor
     public Player(int playerId, string playerName, DateTime playerBirthdate, Gender playerGender, int playerLevel)
     {
         PlayerId = playerId;
@@ -28,19 +26,17 @@ public class Player
         PlayerLevel = playerLevel;
     }
     
-        public Player( string playerName, DateTime playerBirthdate)
-        {
-            PlayerName = playerName;
-            PlayerBirthdate = playerBirthdate;
-        }
-        
-        public Player( string playerName, DateTime playerBirthdate, Gender playerGender, int playerLevel)
-        {
-            PlayerName = playerName;
-            PlayerBirthdate = playerBirthdate;
-            PlayerGender = playerGender;
-            PlayerLevel = playerLevel;
-        }
-
-
+    public Player( string playerName, DateTime playerBirthdate)
+    {
+        PlayerName = playerName;
+        PlayerBirthdate = playerBirthdate;
+    }
+    
+    public Player( string playerName, DateTime playerBirthdate, Gender playerGender, int playerLevel)
+    {
+        PlayerName = playerName;
+        PlayerBirthdate = playerBirthdate;
+        PlayerGender = playerGender;
+        PlayerLevel = playerLevel;
+    }
 }

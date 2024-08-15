@@ -18,9 +18,12 @@ public interface IRepository
     IEnumerable<Guild> ReadGuildsByNameAndOrLevel(string guildName = null, int? guildLevel = null);
     void CreateGuild(Guild guild);
     IEnumerable<PlayerGuild> ReadAllPlayerGuildsByPlayerId(int playerId);
+    //IEnumerable<Player> ReadGuildWithPlayersNotInGuild(int id);
+    Guild ReadGuildWithPlayers(int id);
     void CreatePlayerGuild(PlayerGuild playerGuild);
     void DeletePlayerGuild(int playerId, int guildId);
     Monster ReadMonster(int id);
     IEnumerable<Monster> ReadAllMonsters();
     void CreateMonster(Monster monster);
+    PlayerGuild ReadPlayerGuild(int playerId, int guildId);
 }

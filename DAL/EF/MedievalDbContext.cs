@@ -10,7 +10,7 @@ public class MedievalDbContext : DbContext
     public DbSet<Player> Players { get; set; }
     public DbSet<Guild> Guilds { get; set; }
     public DbSet<Monster> Monsters { get; set; }
-    public DbSet<PlayerGuild> PlayerGuild { get; set; }
+    public DbSet<PlayerGuild> PlayerGuilds { get; set; }
     
     public MedievalDbContext(DbContextOptions options) : base(options)
     {

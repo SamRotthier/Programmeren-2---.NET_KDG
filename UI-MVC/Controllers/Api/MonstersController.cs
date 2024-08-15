@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace MedievalMMO.UI.Web.Controllers.Api;
 
 [ApiController]
-[Route("api/[controller]")]
-public class MonstersController : Controller
+[Route("/api/[controller]")]
+public class MonstersController : ControllerBase
 {
     private readonly IManager _mgr;
 

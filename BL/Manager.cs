@@ -61,6 +61,17 @@ public class Manager: IManager
     {
         return _repository.ReadAllGuildsWithPlayers();
     }
+/*
+    public IEnumerable<Player> GetGuildWithPlayersNotInGuild(int id)
+    {
+        return _repository.ReadGuildWithPlayersNotInGuild(id);
+    }
+    */
+
+    public Guild GetGuildWithPlayers(int id)
+    {
+        return _repository.ReadGuildWithPlayers(id);
+    }
 
     public void DeletePlayerGuild(int playerId, int guildId)
     {
@@ -85,7 +96,7 @@ public class Manager: IManager
         return guild;
     }
 
-    public void CreatePlayerGuild(int playerId, int guildId)
+    public void AddPlayerGuild(int playerId, int guildId)
     {
        Player player = _repository.ReadPlayer(playerId);
        Guild guild = _repository.ReadGuild(guildId);
@@ -110,6 +121,20 @@ public class Manager: IManager
         this.Validate(monster);
         _repository.CreateMonster(monster);
         return monster;
+    }
+
+    public PlayerGuild GetPlayerGuild(int playerId, int guildId)
+    {
+        return _repository.ReadPlayerGuild(playerId, guildId);
+    }
+
+    public PlayerGuild AddPlayerGuild(int playerId, int guildId, DateTime playerJoinedGuildOn)
+    {
+        Player player = GetPlayer(playerId);
+        Guild guild = GetGuild(guildId);
+        PlayerGuild playerGuild = new PlayerGuild(player, guild, playerJoinedGuildOn);
+        _repository.CreatePlayerGuild(playerGuild);
+        return playerGuild;
     }
 
     private void Validate(Player player)

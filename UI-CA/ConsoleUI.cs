@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using MedievalMMO.BL;
 using MedievalMMO.BL.Domain;
@@ -322,7 +324,7 @@ public class ConsoleUI
         
         try
         {
-            _manager.CreatePlayerGuild(selectedPlayerId, selectedGuildId);
+            _manager.AddPlayerGuild(selectedPlayerId, selectedGuildId);
         }
         catch (Exception e)
         {

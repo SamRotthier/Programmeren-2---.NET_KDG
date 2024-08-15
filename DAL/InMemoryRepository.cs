@@ -143,6 +143,13 @@ public class InMemoryRepository : IRepository
         throw new NotImplementedException();
     }
 
+
+
+    public Guild ReadGuildWithPlayers(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public void CreatePlayerGuild(PlayerGuild playerGuild)
     {
         throw new NotImplementedException();
@@ -164,6 +171,11 @@ public class InMemoryRepository : IRepository
     }
 
     public void CreateMonster(Monster monster)
+    {
+        throw new NotImplementedException();
+    }
+
+    public PlayerGuild ReadPlayerGuild(int playerId, int guildId)
     {
         throw new NotImplementedException();
     }

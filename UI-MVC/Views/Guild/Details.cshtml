@@ -13,4 +13,34 @@
 <p><strong>Guild Level: </strong><span>@(Model.GuildLevel?.ToString() ?? "No Known Level")</span></p>
 <p><strong>Guild Leader: </strong><span>@(Model.GuildMadeBy ?? "No Known Owner")</span></p>
 
-<strong><a asp-controller="Player" asp-action="Index">Back to Player Selection</a></strong>
+<table id="player-table">
+    <thead>
+    <td class="col-2"><strong>Player Id</strong></td>
+    <td class="col-3"><strong>Player Name</strong></td>
+    <td class="col-2"><strong>Player Gender</strong></td>
+    <td class="col-3"><strong>Player Level</strong></td>
+    </thead>
+    <tbody id="player-table-body"></tbody>
+</table>
+
+
+<h3>Add Player</h3>
+<form>
+    <label for="player-selectbox" class="form-label">Player</label>
+    <select name="player-selectbox" id="player-selectbox" class="form-select">
+        <option value="" disabled selected>Select Player</option>
+    </select>
+    
+    <label for="playerJoinedOnDateTime" class="form-label">Player joined on</label>
+    <input type="datetime-local" name="playerJoinedOnDateTime" id="playerJoinedOnDateTime" class="form-control"/>
+</form>
+<button id="submit-player">Submit Player</button>
+
+
+<div><strong><a asp-controller="Player" asp-action="Index">Back to Player Selection</a></strong></div>
+
+
+@section Scripts
+{
+    <script src="~/js/Guild/details.js"></script>
+}

@@ -55,11 +55,11 @@ public class DataSeeder
         context.Monsters.Add(monsterRaichu);
         context.Monsters.Add(monsterCharmender);
         context.Monsters.Add(monsterCharizard);
-        context.PlayerGuild.Add(playerGuildSK);
-        context.PlayerGuild.Add(playerGuildPK);
-        context.PlayerGuild.Add(playerGuildSG);
-        context.PlayerGuild.Add(playerGuildES);
-        context.PlayerGuild.Add(playerGuildYS);
+        context.PlayerGuilds.Add(playerGuildSK);
+        context.PlayerGuilds.Add(playerGuildPK);
+        context.PlayerGuilds.Add(playerGuildSG);
+        context.PlayerGuilds.Add(playerGuildES);
+        context.PlayerGuilds.Add(playerGuildYS);
         
         context.SaveChanges();
         context.ChangeTracker.Clear();

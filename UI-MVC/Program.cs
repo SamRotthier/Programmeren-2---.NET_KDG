@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using MedievalMMO.BL;
 using MedievalMMO.DAL;
 using MedievalMMO.DAL.EF;
@@ -12,11 +13,12 @@ builder.Services.AddDbContext<MedievalDbContext>(options =>
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IManager, Manager>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 var app = builder.Build();
 
-InitializeDatabase(dropDatabase: false);
+InitializeDatabase(dropDatabase: true);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -14,12 +14,18 @@ public interface IManager
     Guild GetGuild(int id);
     IEnumerable<Guild> GetAllGuilds();
     IEnumerable<Guild> GetAllGuildsWithPlayers();
+    //IEnumerable<Player> GetGuildWithPlayersNotInGuild(int id);
     IEnumerable<Guild> GetGuildsByNameAndOrLevel(string guildName = null, int? guildLevel = null);
     Guild AddGuild(string guildName, DateTime guildMadeOn, int guildLevel, string? guildMadeBy = null);
-    void CreatePlayerGuild(int playerId, int guildId);
+    Guild GetGuildWithPlayers(int id);
+    void AddPlayerGuild(int playerId, int guildId);
+    PlayerGuild AddPlayerGuild(int playerId, int guildId, DateTime playerJoinedGuildOn);
     void DeletePlayerGuild(int playerId, int guildId);
     IEnumerable<PlayerGuild> GetAllPlayerGuildsByPlayerId(int playerId);
     Monster GetMonster(int id);
     IEnumerable<Monster> GetAllMonsters();
     Monster AddMonster(string monsterName, Gender monsterGender, int monsterLevel, double monsterHealth, bool monsterCanEvolve);
+    PlayerGuild GetPlayerGuild(int playerId, int guildId);
+    
+
 }

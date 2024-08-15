@@ -19,7 +19,7 @@ function getMonsters(){
 
 function generateMonsterTable(data){
     //console.log(data)
-   const monsterTableBody= document.getElementById("monster-table-body");
+   const monsterTableBody= document.getElementById("monster-table-body")
     monsterTableBody.innerHTML="" 
     
    if (data.length === 0){
@@ -30,25 +30,25 @@ function generateMonsterTable(data){
    data.forEach(monster =>{
        const row = document.createElement("tr")
 
-       const cellMonsterName = document.createElement("td");
+       const cellMonsterName = document.createElement("td")
        cellMonsterName.innerText = monster.monsterName
-       row.appendChild(cellMonsterName);
+       row.appendChild(cellMonsterName)
 
-       const cellMonsterGender = document.createElement("td");
+       const cellMonsterGender = document.createElement("td")
        cellMonsterGender.innerText = genderMap[monster.monsterGender]
-       row.appendChild(cellMonsterGender);
+       row.appendChild(cellMonsterGender)
 
-       const cellMonsterLevel = document.createElement("td");
+       const cellMonsterLevel = document.createElement("td")
        cellMonsterLevel.innerText = monster.monsterLevel
-       row.appendChild(cellMonsterLevel);
+       row.appendChild(cellMonsterLevel)
 
-       const cellMonsterHealth = document.createElement("td");
+       const cellMonsterHealth = document.createElement("td")
        cellMonsterHealth.innerText = monster.monsterHealth
-       row.appendChild(cellMonsterHealth);
+       row.appendChild(cellMonsterHealth)
 
-       const cellMonsterCanEvolve = document.createElement("td");
+       const cellMonsterCanEvolve = document.createElement("td")
        cellMonsterCanEvolve.innerText = monster.monsterCanEvolve
-       row.appendChild(cellMonsterCanEvolve);
+       row.appendChild(cellMonsterCanEvolve)
 
        monsterTableBody.appendChild(row)
    })
